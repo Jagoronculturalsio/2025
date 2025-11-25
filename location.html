@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGARAN - Cultural Heart</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* --- Navigation Styles (Matches Index Page) --- */
+        .nav-button:hover {
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .nav-active {
+            background-color: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-active:hover {
+            background-color: #4338ca;
+            color: #ffffff;
+        }
+        .nav-transparent {
+            background-color: rgba(255, 255, 255, 0.3); 
+            backdrop-filter: blur(8px);
+        }
+
+        .address-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .map-container {
+            border-radius: 1rem;
+            overflow: hidden;
+            height: 400px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    
+    <header class="w-full flex justify-center sticky top-0 z-50 nav-transparent shadow-lg mb-12">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center py-4 md:py-6">
+            
+            <div class="flex items-center">
+                <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider md:mr-6">
+                    <a href="index.html">JAGARAN</a>
+                </div>
+                <a href="index.html" id="homeButton" 
+                   class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
+                    Home
+                </a>
+            </div>
+            
+            <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
+                <a href="about.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="location.html" class="nav-button nav-active text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg transition duration-300">Location</a>
+                <a href="ticket.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Ticket</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="app" class="container mx-auto p-4 md:p-8 pt-0">
+        <main class="space-y-12">
+
+            <section class="text-center">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-2">
+                    Find your way to the <span class="text-indigo-600">cultural heart of the city</span>
+                </h1>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <section class="address-card p-6 md:p-10 space-y-6">
+                    <h2 class="text-3xl font-bold text-gray-700 flex items-center mb-4">
+                        <i data-lucide="map-pin" class="w-7 h-7 text-indigo-600 mr-3"></i> 
+                        Main Venue Address
+                    </h2>
+                    
+                    <div class="text-gray-600 space-y-4 text-lg">
+                        <p><strong>Gopalpur House, Rajarhat, N 24 PGS</strong> (Main Event Ground)</p>
+                        <p>Gopalpur House SRMC, Road,<br>Salua,<br>West Bengal 700136.</p>
+                    </div>
+
+                    <div class="pt-4 border-t mt-6">
+                        <h3 class="text-xl font-bold text-gray-700 mb-2">Key Information</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i data-lucide="calendar" class="w-5 h-5 text-indigo-500 mr-2"></i>
+                                <strong>Date:</strong> December 28, 2025
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="clock" class="w-5 h-5 text-indigo-500 mr-2"></i>
+                                <strong>Time:</strong> 12:00 PM onwards
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="car" class="w-5 h-5 text-indigo-500 mr-2"></i>
+                                <strong>Parking:</strong> Available (Paid lot)
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button 
+                        class="w-full bg-indigo-500 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md mt-6"
+                        onclick="getDirections()">
+                        Get Directions on Map
+                    </button>
+                </section>
+
+                <section class="map-container">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=22.6367598,88.449127&hl=en&z=16&output=embed" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </section>
+            </div>
+
+            <section class="address-card p-6 md:p-10">
+                <h2 class="text-3xl font-bold text-gray-700 flex items-center mb-6 border-b pb-3">
+                    <i data-lucide="bus" class="w-7 h-7 text-indigo-600 mr-3"></i> 
+                    How to Reach Us
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-600">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                            <i data-lucide="map" class="w-5 h-5 text-indigo-500 mr-2"></i> 
+                            Local Bus Routes
+                        </h3>
+                        <ul class="list-disc list-inside space-y-1 pl-4">
+                            <li><strong>Sealdah/Bidhannagar:</strong> Bus 217 is available.</li>
+                            <li><strong>Nagerbazar/Central Jail:</strong> Buses 91, 91A are available.</li>
+                            <li>Nagerbazar and Central Jail are located on the same route.</li>
+                            <li>Sealdah and Bidhannagar are located on the same route.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                            <i data-lucide="train" class="w-5 h-5 text-indigo-500 mr-2"></i> 
+                            Nearest Railway Stations
+                        </h3>
+                        <ul class="list-disc list-inside space-y-1 pl-4">
+                            <li>Dum Dum, Bidhannagar Road, Sealdah, Dum Dum Cantonment.</li>
+                            <li><strong>From Dum Dum:</strong> You need to come to Nagerbazar.</li>
+                            <li><strong>From Dum Dum Cantonment:</strong> Reach Central Jail and then catch a bus.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center">
+                            <i data-lucide="taxi" class="w-5 h-5 text-indigo-500 mr-2"></i> 
+                            Cab / Taxi
+                        </h3>
+                        <p>Search for "Gopalpur House, Salua" on any ride-sharing app for direct navigation.</p>
+                        <p class="text-sm italic mt-2">Try to arrive on time to avoid traffic.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer (Copied from Index) -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
+        <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
+    </footer>
+
+    <script>
+        const MAP_DIRECTIONS_URL = "https://www.google.com/maps/place/Gopalpur+Sporting+Club+Football+Field/@22.6380662,88.4475445,17.75z/data=!4m10!1m2!2m1!1sGopalpur+House,+Football+Ground!3m6!1s0x39f89fb7e69058fd:0xf2e3ca194cc65d5b!8m2!3d22.6367598!4d88.449127!15sCh9Hb3BhbHB1ciBIb3VzZSwgRm9vdGJhbGwgR3JvdW5kWiAiHmdvcGFscHVyIGhvdXNlIGZvb3RiYWxsIGdyb3VuZJIBCnBsYXlncm91bmSaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUXljazAyWlVOUkVBReABAPoBBAgAEBk!16s%2Fg%2F11c3k51_10?hl=en&entry=ttu&g_ep=EgoyMDI1MTEwOS4wIKXMDSoASAFQAw%3D%3D"; 
+
+        window.addEventListener('load', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+
+        function getDirections() {
+            window.open(MAP_DIRECTIONS_URL, '_blank');
+        }
+        
+        // Firebase boilerplate
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+    </script>
+</body>
+</html>

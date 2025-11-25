@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGARAN - Annual Cultural Program</title>
+    <!-- Favicon (Logo) -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczNHbNhABZ8BJa0UFNNNDlNH4OXE_ozWBGv0HGcMbg-MiLM_ppe7VJPp8MgvJaMdFsr1RgZcJ7_alcy_hExCHAg2femF59oom5YeT7VJPp8MgvJaMdFsr1RgZcJ7_alcy_hExCHAg2femF59oom5YeT90gFC_TeHGONBPJ2eNqeY8ESILp7GSXEIDGY_EXlKIvUu-Jt1M=w953-h953-s-no-gm?authuser=0">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- YouTube IFrame Player API -->
+    <script async src="https://www.youtube.com/iframe_api"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        
+        /* --- Navigation Styles (Matches About Page) --- */
+        .nav-button:hover {
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .nav-active {
+            background-color: #4f46e5; /* indigo-600 */
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-active:hover {
+            background-color: #4338ca; /* indigo-700 */
+            color: #ffffff;
+        }
+        .nav-transparent {
+            background-color: rgba(255, 255, 255, 0.3); 
+            backdrop-filter: blur(8px);
+        }
+
+        /* Banner Styles */
+        .banner-image {
+            background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPNaBQ8UXSCZFVA36cpmyw_Pq11fEl8J2ZbV3HWp_IG1vRPUEj6Ap3qRf0N4ltnJgpevu-w5qwtBUM0Gkd2KH5h6eE7BRZmpHSRKv3SkCpdlvO5MIp7L4UycARGVQW93-6IoOdqHBFWadM3oo8COrY=w1920-h378-s-no-gm?authuser=0');
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .banner-image {
+                background-image: url('https://lh3.googleusercontent.com/pw/AP1GczPX4rIPKf-IEF7typ7EvWufCDcI3X2wchQRWvQq7GUXss6i67xXz-cJ8_cAIUIkhoRZCB1fwrf2g6F6bFkJstoVyaEyAFqcuAi-Y3Dplr87KSxscWj78K3vF64ef6zwSkrgxyW-R19n7cveUkb8MDQ=w1906-h953-s-no-gm?authuser=0');
+                background-size: cover;
+                background-position: center;
+            }
+        }
+        
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background-color: #111827; 
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Button Styles */
+        .ticket-button-cta {
+            background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .ticket-button-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.5);
+        }
+        
+        .description-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Highlights Toggle */
+        .highlights-collapse {
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out; 
+        }
+        .rotated-icon {
+            transform: rotate(180deg) !important;
+        }
+        #toggleHighlightsBtn {
+            min-width: 280px;
+        }
+
+        /* Carousel Buttons */
+        .carousel-btn {
+            background-color: #4f46e5;
+            min-width: 48px;
+            min-height: 48px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .carousel-btn:hover {
+            background-color: #4338ca;
+            transform: scale(1.05);
+        }
+        .carousel-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header: Consistent Navigation Bar -->
+    <header class="w-full flex justify-center sticky top-0 z-50 nav-transparent shadow-lg">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center py-4 md:py-6">
+            
+            <!-- Left Group -->
+            <div class="flex items-center">
+                <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider md:mr-6">
+                    <a href="index.html">JAGARAN</a>
+                </div>
+                <!-- Home Button (Active) -->
+                <a href="index.html" id="homeButton" 
+                   class="nav-button nav-active text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg transition duration-300">
+                    Home
+                </a>
+            </div>
+            
+            <!-- Right Group -->
+            <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
+                <a href="about.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="location.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <a href="ticket.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Ticket</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner -->
+    <!-- Removed top margin since header is sticky, added margin-bottom for spacing -->
+    <div id="banner" class="banner-image w-full h-[35vh] md:h-[40vh] mb-8"></div>
+    
+    <!-- Main Content -->
+    <div id="app-content" class="container mx-auto p-4 md:p-8 pt-0">
+
+        <section id="home" class="text-center pt-4">
+            <h1 class="text-4xl md:text-6xl font-black text-gray-800 mb-4">
+                <span class="text-indigo-600">JAGARAN</span> Cultural Festival
+            </h1>
+            <p class="text-xl text-gray-500">The Annual Cultural Awakening. Join us for an unforgettable celebration.</p>
+        </section>
+
+        <main class="space-y-16 mt-12">
+
+            <!-- Video Section -->
+            <section id="main-video-section" class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">A warm welcome to all of you at our festival.</h2>
+                <div id="mainVideoContainer" class="video-container">
+                    <iframe 
+                        id="mainVideoFrame"
+                        src="https://www.youtube.com/embed/kGwyJZwHULo?autoplay=1&loop=1&playlist=kGwyJZwHULo&controls=0&playsinline=1"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        title="JAGARAN Program Details Video"
+                        frameborder="0">
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- Description -->
+            <section id="description-section" class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">Description</h2>
+                <div class="description-card">
+                    <p class="text-gray-700 text-base mb-4">
+                        Culture and entertainment are an integral part of our lives. To provide a refreshing escape from the busyness of our daily routines, Tamaddun Shilpigosthi is delighted to present a wholesome cultural program for you to enjoy with family, relatives, and friends.
+                    </p>
+                    <p class="text-gray-700 text-base mb-4">
+                        Culture reflects the stories of joy, sorrow, and emotions hidden within our social lives. It can spark a revolution or bring about a change in society's traditional mindset. The practice of value-based culture builds a healthy society. Our mission is to counter vulgarity and cultural degradation by promoting an educational and enlightening culture.
+                    </p>
+                    <p class="text-gray-700 text-base mb-4">
+                        With this goal in mind, a historic cultural event titled the "Jagaran Cultural Festival" is set to take place on December 28th at Gopalpur House, near the airport in the North 24 Parganas district.
+                    </p>
+                    <p class="text-gray-800 text-base text-center mt-6">
+                        We cordially invite you all, along with your friends and family, to this event. Your presence is earnestly awaited.
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Highlights -->
+            <section id="highlights-toggle-section" class="max-w-4xl mx-auto py-8">
+                <div class="text-center">
+                    <button id="toggleHighlightsBtn" 
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 flex items-center justify-center mx-auto"
+                        aria-expanded="false" 
+                        aria-controls="highlights-content">
+                        Highlights of Festival
+                        <svg id="toggleIcon" class="w-5 h-5 ml-2 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </div>
+                
+                <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
+                    <div class="description-card p-6 md:p-8 bg-indigo-50 border border-indigo-200">
+                        <h3 class="text-2xl font-extrabold text-indigo-700 mb-4 border-b pb-2">Main Attractions</h3>
+                        <ul class="space-y-3 text-left text-gray-700 list-disc pl-5">
+                            <li><span class="font-semibold text-indigo-600">Cultural Performances:</span> Various types of songs, dances, and poetry recitations.</li>
+                            <li><span class="font-semibold text-indigo-600">Interactive Workshops:</span> Sessions on traditional art and Bengali handicrafts.</li>
+                            <li><span class="font-semibold text-indigo-600">Educational Drama:</span> Educational drama focused on social awareness (on the "Jagaran" theme).</li>
+                            <li><span class="font-semibold text-indigo-600">Art Exhibition:</span> Exhibition of works by local painters and photographers.</li>
+                            <li><span class="font-semibold text-indigo-600">Food Stalls:</span> Arrangement of traditional Bengali cuisine and various delicious snacks.</li>
+                        </ul>
+                        <p class="mt-4 text-center text-sm text-indigo-500 font-medium">— Join us to witness this cultural awakening. —</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="text-center py-8">
+                <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Ready to Join the Celebration?</h2>
+                <button id="ctaTicketButton" 
+                    class="ticket-button-cta text-white font-bold text-xl px-12 py-4 rounded-full shadow-2xl uppercase tracking-wider"
+                    onclick="window.location.href='ticket.html'">
+                    BOOK TICKET NOW
+                </button>
+                <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
+            </section>
+
+            <!-- Playlist Carousel -->
+            <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN Playlist</h2>
+                
+                <div class="video-container"> 
+                    <div id="playlistPlayer"></div> 
+                </div>
+
+                <div class="flex flex-col items-center mt-6"> 
+                    <p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
+                        Video Loading...
+                    </p>
+                    
+                    <div class="flex space-x-6">
+                        <button id="prevBtn" onclick="changePlaylistVideo(-1)" 
+                            class="carousel-btn text-white font-bold p-3 rounded-full shadow-lg flex items-center justify-center w-12 h-12" 
+                            disabled>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
+                        </button>
+                        
+                        <div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner min-w-[70px]">
+                            Loading...
+                        </div>
+                        
+                        <button id="nextBtn" onclick="changePlaylistVideo(1)" 
+                            class="carousel-btn text-white font-bold p-3 rounded-full shadow-lg flex items-center justify-center w-12 h-12" 
+                            disabled>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
+        <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
+    </footer>
+
+    <script>
+        const PLAYLIST_ID = "PLGhDEZQb-0gCrSAjpAvdXU2fLKWMbRvRm";
+        
+        // Highlights Toggle Logic
+        const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
+        const highlightsContent = document.getElementById('highlights-content');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        function toggleHighlights() {
+            const isExpanded = toggleHighlightsBtn.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                highlightsContent.style.maxHeight = '0';
+                toggleHighlightsBtn.setAttribute('aria-expanded', 'false');
+                toggleIcon.classList.remove('rotated-icon');
+            } else {
+                highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
+                toggleHighlightsBtn.setAttribute('aria-expanded', 'true');
+                toggleIcon.classList.add('rotated-icon');
+            }
+        }
+        
+        // YouTube API & Carousel Logic
+        let player;
+        const videoCounter = document.getElementById('videoCounter');
+        const videoTitleDisplay = document.getElementById('videoTitle');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('playlistPlayer', {
+                height: '100%',
+                width: '100%',
+                playerVars: {
+                    'listType': 'playlist', 
+                    'list': PLAYLIST_ID, 
+                    'controls': 1,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'autoplay': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            updateCarouselStatus();
+        }
+        
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                updateCarouselStatus();
+            }
+            if (event.data === YT.PlayerState.ENDED) {
+                changePlaylistVideo(1); 
+            }
+        }
+
+        function updateCarouselStatus() {
+            try {
+                const playlistLength = player.getPlaylist().length;
+                const playlistIndex = player.getPlaylistIndex() + 1; 
+
+                videoCounter.textContent = `${playlistIndex} / ${playlistLength}`;
+
+                const videoData = player.getVideoData();
+                if (videoData && videoData.title) {
+                    videoTitleDisplay.textContent = videoData.title;
+                } else {
+                    videoTitleDisplay.textContent = `Video Loading...`;
+                }
+
+                prevBtn.disabled = (playlistIndex <= 1);
+                nextBtn.disabled = (playlistIndex >= playlistLength);
+
+            } catch (error) {
+                console.warn("Player data loading...");
+                if (videoCounter.textContent === 'Loading...') {
+                    setTimeout(updateCarouselStatus, 500); 
+                }
+            }
+        }
+        
+        window.changePlaylistVideo = function(direction) {
+            if (player) {
+                if (direction === 1) player.nextVideo();
+                else if (direction === -1) player.previousVideo();
+                setTimeout(updateCarouselStatus, 200); 
+            }
+        }
+
+        window.addEventListener('load', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            if (toggleHighlightsBtn) {
+                toggleHighlightsBtn.addEventListener('click', toggleHighlights);
+            }
+        });
+
+        // Firebase boilerplate
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+    </script>
+</body>
+</html>

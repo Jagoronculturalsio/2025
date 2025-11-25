@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGARAN - Book Your Tickets</title>
+    <!-- Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN --><script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* --- Navigation Styles (Matches Index Page) --- */
+        .nav-button:hover {
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .nav-active {
+            background-color: #4f46e5; 
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-active:hover {
+            background-color: #4338ca;
+            color: #ffffff;
+        }
+        .nav-transparent {
+            background-color: rgba(255, 255, 255, 0.3); 
+            backdrop-filter: blur(8px);
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .cta-button {
+            transition: background-color 0.3s ease, transform 0.1s;
+        }
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    
+    <header class="w-full flex justify-center sticky top-0 z-50 nav-transparent shadow-lg mb-12">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center py-4 md:py-6">
+            
+            <div class="flex items-center">
+                <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider md:mr-6">
+                    <a href="index.html">JAGARAN</a>
+                </div>
+                <a href="index.html" id="homeButton" 
+                   class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
+                    Home
+                </a>
+            </div>
+            
+            <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
+                <a href="about.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="location.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <a href="ticket.html" class="nav-button nav-active text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg transition duration-300">Ticket</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="app" class="container mx-auto p-4 md:p-8 pt-0"> 
+
+        <main class="space-y-12">
+            
+            <section class="max-w-xl mx-auto p-8 form-container shadow-2xl">
+                <h1 class="text-3xl font-extrabold text-gray-800 mb-2 text-center">
+                    Send <span class="text-green-600">message</span>
+                </h1>
+                <p class="text-center text-gray-500 mb-8">
+                    Please fill out the form below. We will contact you via WhatsApp to confirm your ticket booking.
+                </p>
+
+                <form id="whatsappBookingForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" name="name" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            placeholder="Enter your full name" required>
+                    </div>
+                    <div>
+                        <label for="village" class="block text-sm font-medium text-gray-700">Village</label>
+                        <input type="text" id="village" name="village" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            placeholder="Village name" required>
+                    </div>
+                    <div>
+                        <label for="po" class="block text-sm font-medium text-gray-700">P.O. (Post Office)</label>
+                        <input type="text" id="po" name="po" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            placeholder="Post Office name" required>
+                    </div>
+                    <div>
+                        <label for="ps" class="block text-sm font-medium text-gray-700">P.S. (Police Station)</label>
+                        <input type="text" id="ps" name="ps" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            placeholder="Police Station name" required>
+                    </div>
+                    <div>
+                        <label for="district" class="block text-sm font-medium text-gray-700">District</label>
+                        <input type="text" id="district" name="district" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            placeholder="District name" required>
+                    </div>
+                    <div>
+                        <label for="pin" class="block text-sm font-medium text-gray-700">Pin Code</label>
+                        <input type="text" id="pin" name="pin" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            placeholder="6 digit PIN" pattern="[0-9]{6}" title="Six digit PIN code" required>
+                    </div>
+
+                    <button type="submit"
+                        class="cta-button w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 shadow-lg flex items-center justify-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            <path d="M12 7h.01"/>
+                            <path d="M11 11h2"/>
+                        </svg>
+                        <span>Next</span>
+                    </button>
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer (Copied from Index) -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
+        <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
+    </footer>
+
+    <script>
+        const WHATSAPP_NUMBER = "7980784954";
+        const WHATSAPP_FORM_ID = "whatsappBookingForm";
+
+        function handleFormSubmit(event) {
+            event.preventDefault(); 
+
+            const name = document.getElementById('name').value;
+            const village = document.getElementById('village').value;
+            const po = document.getElementById('po').value;
+            const ps = document.getElementById('ps').value;
+            const district = document.getElementById('district').value;
+            const pin = document.getElementById('pin').value;
+            
+            const message = encodeURIComponent(
+                `JAGARAN Festival Ticket Booking Inquiry (WhatsApp)\n\n` +
+                `1. Name: ${name}\n` +
+                `2. Village: ${village}\n` +
+                `3. P.O.: ${po}\n` +
+                `4. P.S.: ${ps}\n` +
+                `5. District: ${district}\n` +
+                `6. Pin Code: ${pin}\n\n` +
+                `Please let me know the next steps for ticket booking. Thank you.`
+            );
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+            window.location.href = whatsappUrl;
+        }
+
+        window.addEventListener('load', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            const form = document.getElementById(WHATSAPP_FORM_ID);
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+            }
+        });
+        
+        // Firebase boilerplate
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+    </script>
+</body>
+</html>
