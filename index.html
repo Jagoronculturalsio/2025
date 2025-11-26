@@ -29,12 +29,12 @@
             background-color: #eef2ff;
         }
         .nav-active {
-            background-color: #4f46e5; /* indigo-600 */
+            background-color: #4f46e5;
             color: #ffffff;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .nav-active:hover {
-            background-color: #4338ca; /* indigo-700 */
+            background-color: #4338ca;
             color: #ffffff;
         }
         .nav-transparent {
@@ -247,13 +247,12 @@
     </footer>
 
     <script>
-        // Playlist ID
         const PLAYLIST_ID = "PLol7Qb1Pc6XqHNtvZh8cwODG3PPvGG96p";
         
         let player; // Global player variable
         let isPlaylistLoaded = false; // Flag to track HTML loading
         let isApiReady = false; // Flag to track API ready state
-        let isPlaylistReversed = false; // Flag to track if playlist is already reversed
+        let isPlaylistReversed = false; // Flag to prevent re-reversing loop
         
         // --- Highlights Logic ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
@@ -343,17 +342,19 @@
         }
 
         function onPlayerReady(event) {
-            // Reverse playlist order logic
+            // Logic: Reverse Playlist (Last video -> First)
             if (!isPlaylistReversed) {
                 const currentPlaylist = player.getPlaylist();
+                
                 if (currentPlaylist && currentPlaylist.length > 0) {
-                    // Reverse the array of video IDs
+                    // Reverse the array so the last uploaded video becomes first
                     const reversedPlaylist = [...currentPlaylist].reverse();
-                    // Re-cue the playlist with reversed order
-                    player.cuePlaylist(reversedPlaylist);
-                    isPlaylistReversed = true;
                     
-                    // Update status after a brief delay to allow internal player update
+                    // Cue the reversed playlist into the player
+                    player.cuePlaylist(reversedPlaylist);
+                    isPlaylistReversed = true; // Mark as done so we don't loop
+                    
+                    // Wait a bit for the player to process the new list, then update UI
                     setTimeout(updateCarouselStatus, 500);
                     return;
                 }
@@ -371,7 +372,6 @@
         }
 
         function updateCarouselStatus() {
-            // Only run if elements exist (HTML loaded)
             const videoCounter = document.getElementById('videoCounter');
             const videoTitleDisplay = document.getElementById('videoTitle');
             const prevBtn = document.getElementById('prevBtn');
