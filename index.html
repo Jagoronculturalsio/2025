@@ -23,7 +23,7 @@
             background-color: #f7f7f7;
         }
         
-        /* --- Navigation Styles (Matches About Page) --- */
+        /* --- Navigation Styles --- */
         .nav-button:hover {
             color: #4f46e5;
             background-color: #eef2ff;
@@ -128,7 +128,7 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- Header: Consistent Navigation Bar -->
+    <!-- Header -->
     <header class="w-full flex justify-center sticky top-0 z-50 nav-transparent shadow-lg">
         <div class="container mx-auto px-4 md:px-8 flex justify-between items-center py-4 md:py-6">
             
@@ -155,7 +155,6 @@
     </header>
 
     <!-- Banner -->
-    <!-- Removed top margin since header is sticky, added margin-bottom for spacing -->
     <div id="banner" class="banner-image w-full h-[35vh] md:h-[40vh] mb-8"></div>
     
     <!-- Main Content -->
@@ -204,7 +203,7 @@
                 </div>
             </section>
             
-            <!-- Highlights -->
+            <!-- Highlights Section (Dynamically Loaded) -->
             <section id="highlights-toggle-section" class="max-w-4xl mx-auto py-8">
                 <div class="text-center">
                     <button id="toggleHighlightsBtn" 
@@ -216,18 +215,10 @@
                     </button>
                 </div>
                 
+                <!-- This container will be populated by highlights.html -->
                 <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
-                    <div class="description-card p-6 md:p-8 bg-indigo-50 border border-indigo-200">
-                        <h3 class="text-2xl font-extrabold text-indigo-700 mb-4 border-b pb-2">Main Attractions</h3>
-                        <ul class="space-y-3 text-left text-gray-700 list-disc pl-5">
-                            <li><span class="font-semibold text-indigo-600">Cultural Performances:</span> Various types of songs, dances, and poetry recitations.</li>
-                            <li><span class="font-semibold text-indigo-600">Interactive Workshops:</span> Sessions on traditional art and Bengali handicrafts.</li>
-                            <li><span class="font-semibold text-indigo-600">Educational Drama:</span> Educational drama focused on social awareness (on the "Jagaran" theme).</li>
-                            <li><span class="font-semibold text-indigo-600">Art Exhibition:</span> Exhibition of works by local painters and photographers.</li>
-                            <li><span class="font-semibold text-indigo-600">Food Stalls:</span> Arrangement of traditional Bengali cuisine and various delicious snacks.</li>
-                        </ul>
-                        <p class="mt-4 text-center text-sm text-indigo-500 font-medium">— Join us to witness this cultural awakening. —</p>
-                    </div>
+                    <!-- Content will be loaded here from highlights.html -->
+                    <div class="text-center text-gray-500 py-4">Loading...</div>
                 </div>
             </section>
 
@@ -286,11 +277,12 @@
     <script>
         const PLAYLIST_ID = "PLGhDEZQb-0gCrSAjpAvdXU2fLKWMbRvRm";
         
-        // Highlights Toggle Logic
+        // Highlights Toggle Variables
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
         const highlightsContent = document.getElementById('highlights-content');
         const toggleIcon = document.getElementById('toggleIcon');
 
+        // Function to toggle the highlights section
         function toggleHighlights() {
             const isExpanded = toggleHighlightsBtn.getAttribute('aria-expanded') === 'true';
 
@@ -305,6 +297,28 @@
             }
         }
         
+        // Fetch and load highlights.html content
+        function loadHighlights() {
+            fetch('highlights.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    highlightsContent.innerHTML = html;
+                    // If already expanded, recalculate height
+                    if (toggleHighlightsBtn.getAttribute('aria-expanded') === 'true') {
+                         highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading highlights:', error);
+                    highlightsContent.innerHTML = '<p class="text-center text-red-500 py-4">Failed to load content. Please check your connection or server configuration.</p>';
+                });
+        }
+
         // YouTube API & Carousel Logic
         let player;
         const videoCounter = document.getElementById('videoCounter');
@@ -384,6 +398,8 @@
             if (toggleHighlightsBtn) {
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
+            // Load the separate highlights file
+            loadHighlights();
         });
 
         // Firebase boilerplate
