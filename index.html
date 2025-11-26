@@ -298,8 +298,10 @@
         }
         
         // Fetch and load highlights.html content
+        // UPDATED: Added timestamp to prevent caching
         function loadHighlights() {
-            fetch('highlights.html')
+            const timestamp = new Date().getTime(); // Get current time
+            fetch(`highlights.html?v=${timestamp}`) // Append timestamp to URL
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
