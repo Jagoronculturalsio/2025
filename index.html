@@ -146,7 +146,7 @@
             
             <!-- Right Group -->
             <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
-                <a href="about" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="about.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
                 <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
                 <a href="location.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
                 <a href="ticket.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Ticket</a>
@@ -217,7 +217,6 @@
                 
                 <!-- This container will be populated by highlights.html -->
                 <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
-                    <!-- Content will be loaded here from highlights.html -->
                     <div class="text-center text-gray-500 py-4">Loading...</div>
                 </div>
             </section>
@@ -233,37 +232,10 @@
                 <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
             </section>
 
-            <!-- Playlist Carousel -->
+            <!-- Playlist Carousel (Dynamically Loaded) -->
             <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN Playlist</h2>
-                
-                <div class="video-container"> 
-                    <div id="playlistPlayer"></div> 
-                </div>
-
-                <div class="flex flex-col items-center mt-6"> 
-                    <p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
-                        Video Loading...
-                    </p>
-                    
-                    <div class="flex space-x-6">
-                        <button id="prevBtn" onclick="changePlaylistVideo(-1)" 
-                            class="carousel-btn text-white font-bold p-3 rounded-full shadow-lg flex items-center justify-center w-12 h-12" 
-                            disabled>
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
-                        </button>
-                        
-                        <div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner min-w-[70px]">
-                            Loading...
-                        </div>
-                        
-                        <button id="nextBtn" onclick="changePlaylistVideo(1)" 
-                            class="carousel-btn text-white font-bold p-3 rounded-full shadow-lg flex items-center justify-center w-12 h-12" 
-                            disabled>
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </button>
-                    </div>
-                </div>
+                <!-- Content will be populated by playlist.html -->
+                <div class="text-center text-gray-500 py-10">Loading Playlist...</div>
             </section>
             
         </main>
@@ -276,16 +248,17 @@
 
     <script>
         const PLAYLIST_ID = "PLGhDEZQb-0gCrSAjpAvdXU2fLKWMbRvRm";
+        let player; // Global player variable
+        let isPlaylistLoaded = false; // Flag to track HTML loading
+        let isApiReady = false; // Flag to track API ready state
         
-        // Highlights Toggle Variables
+        // --- Highlights Logic ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
         const highlightsContent = document.getElementById('highlights-content');
         const toggleIcon = document.getElementById('toggleIcon');
 
-        // Function to toggle the highlights section
         function toggleHighlights() {
             const isExpanded = toggleHighlightsBtn.getAttribute('aria-expanded') === 'true';
-
             if (isExpanded) {
                 highlightsContent.style.maxHeight = '0';
                 toggleHighlightsBtn.setAttribute('aria-expanded', 'false');
@@ -297,54 +270,73 @@
             }
         }
         
-        // Fetch and load highlights.html content
-        // UPDATED: Added timestamp to prevent caching
         function loadHighlights() {
-            const timestamp = new Date().getTime(); // Get current time
-            fetch(`highlights.html?v=${timestamp}`) // Append timestamp to URL
+            const timestamp = new Date().getTime();
+            fetch(`highlights.html?v=${timestamp}`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+                    if (!response.ok) throw new Error('Network response was not ok');
                     return response.text();
                 })
                 .then(html => {
                     highlightsContent.innerHTML = html;
-                    // If already expanded, recalculate height
                     if (toggleHighlightsBtn.getAttribute('aria-expanded') === 'true') {
                          highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
                     }
                 })
                 .catch(error => {
                     console.error('Error loading highlights:', error);
-                    highlightsContent.innerHTML = '<p class="text-center text-red-500 py-4">Failed to load content. Please check your connection or server configuration.</p>';
+                    highlightsContent.innerHTML = '<p class="text-center text-red-500 py-4">Failed to load highlights.</p>';
                 });
         }
 
-        // YouTube API & Carousel Logic
-        let player;
-        const videoCounter = document.getElementById('videoCounter');
-        const videoTitleDisplay = document.getElementById('videoTitle');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
+        // --- Playlist Logic ---
+        function loadPlaylist() {
+            const timestamp = new Date().getTime();
+            const playlistSection = document.getElementById('playlist-section');
+            
+            fetch(`playlist.html?v=${timestamp}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(html => {
+                    playlistSection.innerHTML = html;
+                    isPlaylistLoaded = true;
+                    // Attempt to init player if API is already ready
+                    tryInitPlayer();
+                })
+                .catch(error => {
+                    console.error('Error loading playlist:', error);
+                    playlistSection.innerHTML = '<p class="text-center text-red-500 py-4">Failed to load playlist component.</p>';
+                });
+        }
+
+        // Triggered by YouTube API
         window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('playlistPlayer', {
-                height: '100%',
-                width: '100%',
-                playerVars: {
-                    'listType': 'playlist', 
-                    'list': PLAYLIST_ID, 
-                    'controls': 1,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'autoplay': 0
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
+            isApiReady = true;
+            // Attempt to init player if HTML is already loaded
+            tryInitPlayer();
+        }
+
+        function tryInitPlayer() {
+            if (isPlaylistLoaded && isApiReady && !player) {
+                player = new YT.Player('playlistPlayer', {
+                    height: '100%',
+                    width: '100%',
+                    playerVars: {
+                        'listType': 'playlist', 
+                        'list': PLAYLIST_ID, 
+                        'controls': 1,
+                        'modestbranding': 1,
+                        'rel': 0,
+                        'autoplay': 0
+                    },
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
         }
 
         function onPlayerReady(event) {
@@ -361,6 +353,14 @@
         }
 
         function updateCarouselStatus() {
+            // Only run if elements exist (HTML loaded)
+            const videoCounter = document.getElementById('videoCounter');
+            const videoTitleDisplay = document.getElementById('videoTitle');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (!videoCounter) return;
+
             try {
                 const playlistLength = player.getPlaylist().length;
                 const playlistIndex = player.getPlaylistIndex() + 1; 
@@ -400,8 +400,9 @@
             if (toggleHighlightsBtn) {
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
-            // Load the separate highlights file
+            // Load dynamic content
             loadHighlights();
+            loadPlaylist();
         });
 
         // Firebase boilerplate
@@ -410,4 +411,3 @@
     </script>
 </body>
 </html>
-
