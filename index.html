@@ -59,7 +59,7 @@
             }
         }
         
-        /* Video Container */
+        /* Video Container (Main) */
         .video-container {
             position: relative;
             width: 100%;
@@ -108,21 +108,137 @@
             min-width: 280px;
         }
 
-        /* Carousel Buttons */
-        .carousel-btn {
-            background-color: #4f46e5;
-            min-width: 48px;
-            min-height: 48px;
-            transition: background-color 0.3s, transform 0.1s;
+        /* --- New 3D Carousel Styles --- */
+        .carousel-wrapper {
+            position: relative;
+            height: 240px; /* Mobile height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+            perspective: 1000px;
         }
-        .carousel-btn:hover {
-            background-color: #4338ca;
-            transform: scale(1.05);
+        @media (min-width: 768px) {
+            .carousel-wrapper {
+                height: 350px; /* Desktop height */
+            }
         }
-        .carousel-btn:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
+        
+        .c-card {
+            position: absolute;
+            width: 65%; /* Width on mobile */
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+        @media (min-width: 768px) {
+            .c-card {
+                width: 45%; /* Width on desktop */
+                height: 260px;
+            }
+        }
+
+        /* Carousel Positions */
+        .c-center {
+            z-index: 30;
+            transform: translateX(0) scale(1.1);
+            opacity: 1;
+            border: 3px solid #4f46e5;
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.4);
+        }
+        
+        /* Left Item */
+        .c-left {
+            z-index: 20;
+            transform: translateX(-70%) scale(0.85);
+            opacity: 0.6;
+            filter: grayscale(30%);
+        }
+        
+        /* Right Item */
+        .c-right {
+            z-index: 20;
+            transform: translateX(70%) scale(0.85);
+            opacity: 0.6;
+            filter: grayscale(30%);
+        }
+        
+        /* Hidden Items (Out of view) */
+        .c-hidden-left {
+            z-index: 10;
+            transform: translateX(-180%) scale(0.6);
+            opacity: 0;
+        }
+        .c-hidden-right {
+            z-index: 10;
+            transform: translateX(180%) scale(0.6);
+            opacity: 0;
+        }
+
+        /* Play Icon Overlay */
+        .play-overlay {
+            background: rgba(79, 70, 229, 0.85);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: scale(0.8);
+        }
+        .c-center:hover .play-overlay {
+            transform: scale(1.1);
+        }
+        .c-center .play-overlay {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Modal Styles */
+        .video-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .video-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            width: 90%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            background: black;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -215,7 +331,6 @@
                     </button>
                 </div>
                 
-                <!-- This container will be populated by highlights.html -->
                 <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
                     <div class="text-center text-gray-500 py-4">Loading...</div>
                 </div>
@@ -232,13 +347,30 @@
                 <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
             </section>
 
-            <!-- Playlist Carousel (Dynamically Loaded) -->
-            <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
-                <!-- Content will be populated by playlist.html -->
-                <div class="text-center text-gray-500 py-10">Loading Playlist...</div>
+            <!-- NEW Playlist Carousel (Custom 3D Slider) -->
+            <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-6xl mx-auto overflow-hidden">
+                <h2 class="text-3xl font-bold text-gray-700 mb-8 text-center">JAGARAN Playlist</h2>
+                
+                <!-- Carousel Container -->
+                <div id="custom-carousel" class="carousel-wrapper">
+                    <div class="text-center text-gray-500">Loading Videos...</div>
+                </div>
+                
+                <!-- Instructions -->
+                <p class="text-center text-gray-400 text-sm mt-6 animate-pulse">
+                    Upcoming videos automatically slide in every 3 seconds
+                </p>
             </section>
             
         </main>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeVideoModal()">&times;</div>
+            <div id="modalPlayerContainer" class="w-full h-full"></div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -249,10 +381,11 @@
     <script>
         const PLAYLIST_ID = "PLol7Qb1Pc6XqHNtvZh8cwODG3PPvGG96p";
         
-        let player; 
-        let isPlaylistLoaded = false; 
-        let isApiReady = false; 
-        let isPlaylistReversed = false; 
+        let dataPlayer; // Invisible player to fetch data
+        let modalPlayer; // Player inside modal
+        let carouselInterval;
+        let playlistVideoIds = [];
+        let currentIndex = 0;
         
         // --- Highlights Logic ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
@@ -285,129 +418,156 @@
                 .catch(error => console.error('Highlights error:', error));
         }
 
-        // --- Playlist Logic ---
-        function loadPlaylist() {
-            const timestamp = new Date().getTime();
-            const playlistSection = document.getElementById('playlist-section');
-            
-            fetch(`playlist.html?v=${timestamp}`)
-                .then(response => response.text())
-                .then(html => {
-                    playlistSection.innerHTML = html;
-                    isPlaylistLoaded = true;
-                    tryInitPlayer();
-                })
-                .catch(error => console.error('Playlist error:', error));
-        }
-
+        // --- API Ready ---
         window.onYouTubeIframeAPIReady = function() {
-            isApiReady = true;
-            tryInitPlayer();
+            // Initialize a hidden player just to fetch the playlist data
+            // We create a dummy div for it
+            const dummyDiv = document.createElement('div');
+            dummyDiv.id = 'dummyPlayer';
+            dummyDiv.style.display = 'none';
+            document.body.appendChild(dummyDiv);
+
+            dataPlayer = new YT.Player('dummyPlayer', {
+                height: '0',
+                width: '0',
+                playerVars: {
+                    'listType': 'playlist',
+                    'list': PLAYLIST_ID
+                },
+                events: {
+                    'onReady': onDataPlayerReady
+                }
+            });
         }
 
-        function tryInitPlayer() {
-            if (isPlaylistLoaded && isApiReady && !player) {
-                player = new YT.Player('playlistPlayer', {
+        function onDataPlayerReady(event) {
+            // Fetch playlist IDs
+            // Note: getPlaylist() might take a moment
+            setTimeout(() => {
+                const rawIds = dataPlayer.getPlaylist();
+                if (rawIds && rawIds.length > 0) {
+                    // Reverse: Last uploaded first
+                    playlistVideoIds = [...rawIds].reverse();
+                    buildCarousel(playlistVideoIds);
+                } else {
+                    document.getElementById('custom-carousel').innerHTML = '<p class="text-red-500">No videos found.</p>';
+                }
+            }, 1000); // Short delay to ensure data is loaded
+        }
+
+        // --- Carousel Logic ---
+        function buildCarousel(ids) {
+            const container = document.getElementById('custom-carousel');
+            container.innerHTML = ''; // Clear loading text
+
+            // Create card elements
+            ids.forEach((id, index) => {
+                const card = document.createElement('div');
+                card.className = 'c-card';
+                card.id = `card-${index}`;
+                // YouTube Thumbnail URL
+                card.style.backgroundImage = `url('https://i.ytimg.com/vi/${id}/hqdefault.jpg')`;
+                
+                // Play Icon Overlay
+                const playIcon = document.createElement('div');
+                playIcon.className = 'play-overlay';
+                playIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+                card.appendChild(playIcon);
+
+                // Click event
+                card.onclick = () => {
+                    if (card.classList.contains('c-center')) {
+                        openVideoModal(id);
+                    } else {
+                        // Optional: Click side card to center it immediately? 
+                        // For now, let's strictly follow the automatic loop or just play center.
+                    }
+                };
+
+                container.appendChild(card);
+            });
+
+            updateCarouselView();
+            startLoop();
+        }
+
+        function updateCarouselView() {
+            const total = playlistVideoIds.length;
+            if (total === 0) return;
+
+            playlistVideoIds.forEach((_, i) => {
+                const card = document.getElementById(`card-${i}`);
+                // Reset classes
+                card.className = 'c-card';
+
+                // Calculate relative position
+                // We need circular logic relative to currentIndex
+                let diff = (i - currentIndex + total) % total; 
+                // diff = 0 -> Center
+                // diff = 1 -> Right
+                // diff = total-1 -> Left (equivalent to -1)
+                
+                if (diff === 0) {
+                    card.classList.add('c-center');
+                } else if (diff === 1) {
+                    card.classList.add('c-right');
+                } else if (diff === total - 1) {
+                    card.classList.add('c-left');
+                } else {
+                    // Hidden items
+                    // Decide if hidden left or hidden right based on proximity
+                    if (diff < total / 2) {
+                        card.classList.add('c-hidden-right');
+                    } else {
+                        card.classList.add('c-hidden-left');
+                    }
+                }
+            });
+        }
+
+        function startLoop() {
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % playlistVideoIds.length;
+                updateCarouselView();
+            }, 3000); // 3 seconds stay
+        }
+
+        function stopLoop() {
+            if (carouselInterval) clearInterval(carouselInterval);
+        }
+
+        // --- Modal Player Logic ---
+        function openVideoModal(videoId) {
+            stopLoop(); // Stop sliding while watching
+            const modal = document.getElementById('videoModal');
+            modal.classList.add('active');
+
+            if (modalPlayer) {
+                modalPlayer.loadVideoById(videoId);
+            } else {
+                modalPlayer = new YT.Player('modalPlayerContainer', {
                     height: '100%',
                     width: '100%',
+                    videoId: videoId,
                     playerVars: {
-                        'listType': 'playlist', 
-                        'list': PLAYLIST_ID, 
-                        'controls': 1,
-                        'modestbranding': 1,
-                        'rel': 0,
-                        'autoplay': 0
-                    },
-                    events: {
-                        'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
+                        'autoplay': 1,
+                        'rel': 0
                     }
                 });
             }
         }
 
-        // Improved Reverse Logic with Retry
-        function onPlayerReady(event) {
-            checkAndReversePlaylist();
-        }
-
-        function checkAndReversePlaylist(attempts = 0) {
-            if (isPlaylistReversed) return;
-
-            const currentPlaylist = player.getPlaylist();
-            
-            if (currentPlaylist && currentPlaylist.length > 0) {
-                // Found the playlist! Reverse it.
-                const reversedPlaylist = [...currentPlaylist].reverse();
-                
-                // Cue the reversed playlist AND force start at index 0
-                player.cuePlaylist(reversedPlaylist, 0); 
-                
-                isPlaylistReversed = true;
-                
-                // Update UI after a moment
-                setTimeout(updateCarouselStatus, 500);
-            } else {
-                // Playlist not ready yet, retry...
-                if (attempts < 10) { // Try for ~5 seconds
-                    console.log("Playlist data not ready, retrying...", attempts);
-                    setTimeout(() => checkAndReversePlaylist(attempts + 1), 500);
-                } else {
-                    console.warn("Could not load playlist data for reversal.");
-                    updateCarouselStatus(); // Just show whatever we have
-                }
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            modal.classList.remove('active');
+            if (modalPlayer) {
+                modalPlayer.stopVideo();
             }
-        }
-        
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                changePlaylistVideo(1); 
-            }
-            updateCarouselStatus();
+            startLoop(); // Resume sliding
         }
 
-        function updateCarouselStatus() {
-            const videoCounter = document.getElementById('videoCounter');
-            const videoTitleDisplay = document.getElementById('videoTitle');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            if (!videoCounter) return;
-
-            try {
-                // Use player.getPlaylist() to get current list size
-                // (cuePlaylist updates this list)
-                const playlist = player.getPlaylist();
-                if (!playlist) return;
-
-                const playlistLength = playlist.length;
-                const playlistIndex = player.getPlaylistIndex() + 1; 
-
-                videoCounter.textContent = `${playlistIndex} / ${playlistLength}`;
-
-                const videoData = player.getVideoData();
-                if (videoData && videoData.title) {
-                    videoTitleDisplay.textContent = videoData.title;
-                } else {
-                    videoTitleDisplay.textContent = `Video Loading...`;
-                }
-
-                prevBtn.disabled = (playlistIndex <= 1);
-                nextBtn.disabled = (playlistIndex >= playlistLength);
-
-            } catch (error) {
-                console.warn("Player data loading...");
-            }
-        }
-        
-        window.changePlaylistVideo = function(direction) {
-            if (player) {
-                if (direction === 1) player.nextVideo();
-                else if (direction === -1) player.previousVideo();
-                setTimeout(updateCarouselStatus, 200); 
-            }
-        }
-
+        // Global Initialization
         window.addEventListener('load', () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -416,7 +576,11 @@
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
             loadHighlights();
-            loadPlaylist();
+        });
+
+        // Close modal on outside click
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'videoModal') closeVideoModal();
         });
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
