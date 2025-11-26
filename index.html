@@ -331,7 +331,6 @@
                     </button>
                 </div>
                 
-                <!-- This container will be populated by highlights.html -->
                 <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
                     <div class="text-center text-gray-500 py-4">Loading...</div>
                 </div>
@@ -422,6 +421,7 @@
         // --- API Ready ---
         window.onYouTubeIframeAPIReady = function() {
             // Initialize a hidden player just to fetch the playlist data
+            // We create a dummy div for it
             const dummyDiv = document.createElement('div');
             dummyDiv.id = 'dummyPlayer';
             dummyDiv.style.display = 'none';
@@ -442,16 +442,17 @@
 
         function onDataPlayerReady(event) {
             // Fetch playlist IDs
+            // Note: getPlaylist() might take a moment
             setTimeout(() => {
                 const rawIds = dataPlayer.getPlaylist();
                 if (rawIds && rawIds.length > 0) {
-                    // UPDATED: Used original order (removed reverse())
-                    playlistVideoIds = rawIds; 
+                    // Reverse: Last uploaded first
+                    playlistVideoIds = [...rawIds].reverse();
                     buildCarousel(playlistVideoIds);
                 } else {
                     document.getElementById('custom-carousel').innerHTML = '<p class="text-red-500">No videos found.</p>';
                 }
-            }, 1000);
+            }, 1000); // Short delay to ensure data is loaded
         }
 
         // --- Carousel Logic ---
@@ -477,6 +478,9 @@
                 card.onclick = () => {
                     if (card.classList.contains('c-center')) {
                         openVideoModal(id);
+                    } else {
+                        // Optional: Click side card to center it immediately? 
+                        // For now, let's strictly follow the automatic loop or just play center.
                     }
                 };
 
@@ -497,7 +501,11 @@
                 card.className = 'c-card';
 
                 // Calculate relative position
+                // We need circular logic relative to currentIndex
                 let diff = (i - currentIndex + total) % total; 
+                // diff = 0 -> Center
+                // diff = 1 -> Right
+                // diff = total-1 -> Left (equivalent to -1)
                 
                 if (diff === 0) {
                     card.classList.add('c-center');
@@ -506,6 +514,8 @@
                 } else if (diff === total - 1) {
                     card.classList.add('c-left');
                 } else {
+                    // Hidden items
+                    // Decide if hidden left or hidden right based on proximity
                     if (diff < total / 2) {
                         card.classList.add('c-hidden-right');
                     } else {
