@@ -339,7 +339,10 @@
             if (currentPlaylist && currentPlaylist.length > 0) {
                 // Found the playlist! Reverse it.
                 const reversedPlaylist = [...currentPlaylist].reverse();
-                player.cuePlaylist(reversedPlaylist);
+                
+                // Cue the reversed playlist AND force start at index 0
+                player.cuePlaylist(reversedPlaylist, 0); 
+                
                 isPlaylistReversed = true;
                 
                 // Update UI after a moment
