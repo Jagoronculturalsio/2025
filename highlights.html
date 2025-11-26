@@ -1,11 +1,120 @@
-<div class="description-card p-6 md:p-8 bg-indigo-50 border border-indigo-200">
-    <h3 class="text-2xl font-extrabold text-indigo-700 mb-4 border-b pb-2">Main Attractions</h3>
-    <ul class="space-y-3 text-left text-gray-700 list-disc pl-5">
-        <li><span class="font-semibold text-indigo-600">Cultural Performances:</span> Various types of songs, dances, and poetry recitations.</li>
-        <li><span class="font-semibold text-indigo-600">Interactive Workshops:</span> Sessions on traditional art and Bengali handicrafts.</li>
-        <li><span class="font-semibold text-indigo-600">Educational Drama:</span> Educational drama focused on social awareness (on the "Jagaran" theme).</li>
-        <li><span class="font-semibold text-indigo-600">Art Exhibition:</span> Exhibition of works by local painters and photographers.</li>
-        <li><span class="font-semibold text-indigo-600">Food Stalls:</span> Arrangement of traditional Bengali cuisine and various delicious snacks.</li>
-    </ul>
-    <p class="mt-4 text-center text-sm text-indigo-500 font-medium">— Join us to witness this cultural awakening. —</p>
+<div class="bg-gray-50 p-4 md:p-8 rounded-xl border border-gray-200">
+    <div class="text-center mb-10">
+        <h3 class="text-3xl font-extrabold text-indigo-700 mb-2">Main Attractions</h3>
+        <div class="h-1 w-24 bg-indigo-500 mx-auto rounded-full"></div>
+        <p class="text-gray-500 mt-3 max-w-2xl mx-auto">Experience the essence of our heritage through a diverse array of events designed to captivate your senses.</p>
+    </div>
+
+    <!-- Column Layout for Alternating Cards -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto">
+        
+        <!-- Card 1: Cultural Performances (Image RIGHT, Text LEFT) -->
+        <!-- md:flex-row-reverse puts image on right, text on left on desktop -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row-reverse hover:shadow-xl transition-shadow duration-300">
+            <!-- Image Section (Fixed width md:w-56 for smaller image) -->
+            <div class="w-full md:w-56 h-48 md:h-auto flex-shrink-0 relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1543906965-f9520aa2ed8a?q=80&w=400&auto=format&fit=crop" alt="Cultural Performance" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- Text Section -->
+            <div class="p-6 flex flex-col justify-center flex-grow text-left">
+                <div class="flex items-center mb-2">
+                    <div class="p-1.5 bg-indigo-100 rounded-lg text-indigo-600 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800">Cultural Performances</h4>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    Immerse yourself in various types of traditional songs, classical dances, and soul-stirring poetry recitations.
+                </p>
+            </div>
+        </div>
+
+        <!-- Card 2: Interactive Workshops (Image LEFT, Text RIGHT) -->
+        <!-- md:flex-row puts image on left, text on right on desktop -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow duration-300">
+            <!-- Image Section -->
+            <div class="w-full md:w-56 h-48 md:h-auto flex-shrink-0 relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?q=80&w=400&auto=format&fit=crop" alt="Workshop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- Text Section -->
+            <div class="p-6 flex flex-col justify-center flex-grow text-left">
+                <div class="flex items-center mb-2">
+                    <div class="p-1.5 bg-pink-100 rounded-lg text-pink-600 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800">Interactive Workshops</h4>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    Join hands-on sessions to learn traditional art forms and explore the intricate world of Bengali handicrafts.
+                </p>
+            </div>
+        </div>
+
+        <!-- Card 3: Educational Drama (Image RIGHT, Text LEFT) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row-reverse hover:shadow-xl transition-shadow duration-300">
+            <!-- Image Section -->
+            <div class="w-full md:w-56 h-48 md:h-auto flex-shrink-0 relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1503095392269-271ff144862a?q=80&w=400&auto=format&fit=crop" alt="Drama" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- Text Section -->
+            <div class="p-6 flex flex-col justify-center flex-grow text-left">
+                <div class="flex items-center mb-2">
+                    <div class="p-1.5 bg-yellow-100 rounded-lg text-yellow-600 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-theater"><path d="M2 10s3-3 3-8"/><path d="M22 10s-3-3-3-8"/><path d="M10 2c0 4.4-3.6 8-8 8"/><path d="M14 2c0 4.4 3.6 8 8 8"/><path d="M2 10s0 10 10 10 10-10 10-10"/><path d="M12 10v10"/><path d="M7 15h10"/></svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800">Educational Drama</h4>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    Witness compelling educational dramas focused on social awareness, centered around the powerful "Jagaran" theme.
+                </p>
+            </div>
+        </div>
+
+        <!-- Card 4: Art Exhibition (Image LEFT, Text RIGHT) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow duration-300">
+            <!-- Image Section -->
+            <div class="w-full md:w-56 h-48 md:h-auto flex-shrink-0 relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?q=80&w=400&auto=format&fit=crop" alt="Art Exhibition" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- Text Section -->
+            <div class="p-6 flex flex-col justify-center flex-grow text-left">
+                <div class="flex items-center mb-2">
+                    <div class="p-1.5 bg-blue-100 rounded-lg text-blue-600 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800">Art Exhibition</h4>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    Explore a curated exhibition showcasing the finest works by talented local painters and visionary photographers.
+                </p>
+            </div>
+        </div>
+
+        <!-- Card 5: Food Stalls (Image RIGHT, Text LEFT) -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row-reverse hover:shadow-xl transition-shadow duration-300">
+            <!-- Image Section -->
+            <div class="w-full md:w-56 h-48 md:h-auto flex-shrink-0 relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1606491956689-2ea28c674675?q=80&w=400&auto=format&fit=crop" alt="Food Stalls" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- Text Section -->
+            <div class="p-6 flex flex-col justify-center flex-grow text-left">
+                <div class="flex items-center mb-2">
+                    <div class="p-1.5 bg-green-100 rounded-lg text-green-600 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800">Food Stalls</h4>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    Savor the authentic taste of traditional Bengali cuisine and treat yourself to a variety of delicious snacks.
+                </p>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="mt-12 text-center">
+        <p class="inline-block px-6 py-2 bg-indigo-600 text-white rounded-full text-sm font-medium shadow-md">
+            — Join us to witness this cultural awakening —
+        </p>
+    </div>
 </div>
