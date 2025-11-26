@@ -247,12 +247,13 @@
     </footer>
 
     <script>
-        // UPDATED: New Playlist ID
+        // Playlist ID
         const PLAYLIST_ID = "PLol7Qb1Pc6XqHNtvZh8cwODG3PPvGG96p";
         
         let player; // Global player variable
         let isPlaylistLoaded = false; // Flag to track HTML loading
         let isApiReady = false; // Flag to track API ready state
+        let isPlaylistReversed = false; // Flag to track if playlist is already reversed
         
         // --- Highlights Logic ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
@@ -342,6 +343,21 @@
         }
 
         function onPlayerReady(event) {
+            // Reverse playlist order logic
+            if (!isPlaylistReversed) {
+                const currentPlaylist = player.getPlaylist();
+                if (currentPlaylist && currentPlaylist.length > 0) {
+                    // Reverse the array of video IDs
+                    const reversedPlaylist = [...currentPlaylist].reverse();
+                    // Re-cue the playlist with reversed order
+                    player.cuePlaylist(reversedPlaylist);
+                    isPlaylistReversed = true;
+                    
+                    // Update status after a brief delay to allow internal player update
+                    setTimeout(updateCarouselStatus, 500);
+                    return;
+                }
+            }
             updateCarouselStatus();
         }
         
