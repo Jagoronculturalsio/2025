@@ -249,10 +249,10 @@
     <script>
         const PLAYLIST_ID = "PLol7Qb1Pc6XqHNtvZh8cwODG3PPvGG96p";
         
-        let player; // Global player variable
-        let isPlaylistLoaded = false; // Flag to track HTML loading
-        let isApiReady = false; // Flag to track API ready state
-        let isPlaylistReversed = false; // Flag to prevent re-reversing loop
+        let player; 
+        let isPlaylistLoaded = false; 
+        let isApiReady = false; 
+        let isPlaylistReversed = false; 
         
         // --- Highlights Logic ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
@@ -275,20 +275,14 @@
         function loadHighlights() {
             const timestamp = new Date().getTime();
             fetch(`highlights.html?v=${timestamp}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
+                .then(response => response.text())
                 .then(html => {
                     highlightsContent.innerHTML = html;
                     if (toggleHighlightsBtn.getAttribute('aria-expanded') === 'true') {
                          highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
                     }
                 })
-                .catch(error => {
-                    console.error('Error loading highlights:', error);
-                    highlightsContent.innerHTML = '<p class="text-center text-red-500 py-4">Failed to load highlights.</p>';
-                });
+                .catch(error => console.error('Highlights error:', error));
         }
 
         // --- Playlist Logic ---
@@ -297,26 +291,17 @@
             const playlistSection = document.getElementById('playlist-section');
             
             fetch(`playlist.html?v=${timestamp}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
+                .then(response => response.text())
                 .then(html => {
                     playlistSection.innerHTML = html;
                     isPlaylistLoaded = true;
-                    // Attempt to init player if API is already ready
                     tryInitPlayer();
                 })
-                .catch(error => {
-                    console.error('Error loading playlist:', error);
-                    playlistSection.innerHTML = '<p class="text-center text-red-500 py-4">Failed to load playlist component.</p>';
-                });
+                .catch(error => console.error('Playlist error:', error));
         }
 
-        // Triggered by YouTube API
         window.onYouTubeIframeAPIReady = function() {
             isApiReady = true;
-            // Attempt to init player if HTML is already loaded
             tryInitPlayer();
         }
 
@@ -341,34 +326,41 @@
             }
         }
 
+        // Improved Reverse Logic with Retry
         function onPlayerReady(event) {
-            // Logic: Reverse Playlist (Last video -> First)
-            if (!isPlaylistReversed) {
-                const currentPlaylist = player.getPlaylist();
+            checkAndReversePlaylist();
+        }
+
+        function checkAndReversePlaylist(attempts = 0) {
+            if (isPlaylistReversed) return;
+
+            const currentPlaylist = player.getPlaylist();
+            
+            if (currentPlaylist && currentPlaylist.length > 0) {
+                // Found the playlist! Reverse it.
+                const reversedPlaylist = [...currentPlaylist].reverse();
+                player.cuePlaylist(reversedPlaylist);
+                isPlaylistReversed = true;
                 
-                if (currentPlaylist && currentPlaylist.length > 0) {
-                    // Reverse the array so the last uploaded video becomes first
-                    const reversedPlaylist = [...currentPlaylist].reverse();
-                    
-                    // Cue the reversed playlist into the player
-                    player.cuePlaylist(reversedPlaylist);
-                    isPlaylistReversed = true; // Mark as done so we don't loop
-                    
-                    // Wait a bit for the player to process the new list, then update UI
-                    setTimeout(updateCarouselStatus, 500);
-                    return;
+                // Update UI after a moment
+                setTimeout(updateCarouselStatus, 500);
+            } else {
+                // Playlist not ready yet, retry...
+                if (attempts < 10) { // Try for ~5 seconds
+                    console.log("Playlist data not ready, retrying...", attempts);
+                    setTimeout(() => checkAndReversePlaylist(attempts + 1), 500);
+                } else {
+                    console.warn("Could not load playlist data for reversal.");
+                    updateCarouselStatus(); // Just show whatever we have
                 }
             }
-            updateCarouselStatus();
         }
         
         function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                updateCarouselStatus();
-            }
             if (event.data === YT.PlayerState.ENDED) {
                 changePlaylistVideo(1); 
             }
+            updateCarouselStatus();
         }
 
         function updateCarouselStatus() {
@@ -380,7 +372,12 @@
             if (!videoCounter) return;
 
             try {
-                const playlistLength = player.getPlaylist().length;
+                // Use player.getPlaylist() to get current list size
+                // (cuePlaylist updates this list)
+                const playlist = player.getPlaylist();
+                if (!playlist) return;
+
+                const playlistLength = playlist.length;
                 const playlistIndex = player.getPlaylistIndex() + 1; 
 
                 videoCounter.textContent = `${playlistIndex} / ${playlistLength}`;
@@ -397,9 +394,6 @@
 
             } catch (error) {
                 console.warn("Player data loading...");
-                if (videoCounter.textContent === 'Loading...') {
-                    setTimeout(updateCarouselStatus, 500); 
-                }
             }
         }
         
@@ -418,12 +412,10 @@
             if (toggleHighlightsBtn) {
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
-            // Load dynamic content
             loadHighlights();
             loadPlaylist();
         });
 
-        // Firebase boilerplate
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
     </script>
