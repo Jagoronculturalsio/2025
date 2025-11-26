@@ -59,7 +59,7 @@
             }
         }
         
-        /* Video Container (Main) */
+        /* Video Container */
         .video-container {
             position: relative;
             width: 100%;
@@ -240,6 +240,22 @@
             font-size: 2rem;
             cursor: pointer;
         }
+
+        /* Social Media Styles */
+        .social-icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .yt-icon:hover { background-color: #c53030; color: white; }
+        .ig-icon:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); transform: scale(1.1); box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2); }
+        .fb-icon:hover { background-color: #1c50a1; color: white; }
+        .wa-icon:hover { background-color: #067c64; color: white; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -331,6 +347,7 @@
                     </button>
                 </div>
                 
+                <!-- This container will be populated by highlights.html -->
                 <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
                     <div class="text-center text-gray-500 py-4">Loading...</div>
                 </div>
@@ -361,6 +378,46 @@
                     Upcoming videos automatically slide in every 3 seconds
                 </p>
             </section>
+
+            <!-- Social Media Links -->
+            <section id="social-media-links" class="max-w-4xl mx-auto mt-12">
+                <div class="description-card p-6 flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-gray-700 mb-6 text-center">Follow Us on Social Media</h3>
+                    
+                    <div class="flex flex-wrap justify-center gap-6">
+                        <!-- YouTube Link -->
+                        <a href="https://youtube.com/@jagaranculturalfestival" target="_blank" aria-label="YouTube Link" class="social-icon-button bg-red-100 text-red-600 yt-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 5H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V7a2 2 0 00-2-2zm-9 11V8l6 4-6 4z"/>
+                            </svg>
+                        </a>
+                        
+                        <!-- Instagram Link -->
+                        <a href="https://www.instagram.com/jagaranculturalfestival" target="_blank" aria-label="Instagram Link" class="social-icon-button bg-pink-100 text-pink-600 ig-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        
+                        <!-- Facebook Link -->
+                        <a href="https://www.facebook.com/jagaranculturalfestival" target="_blank" aria-label="Facebook Link" class="social-icon-button bg-blue-100 text-blue-600 fb-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                            </svg>
+                        </a>
+                        
+                        <!-- WhatsApp Channel Link -->
+                        <a href="https://whatsapp.com/channel/0029VbAofX4DDmFchboTLY3X" target="_blank" aria-label="WhatsApp Channel Link" class="social-icon-button bg-green-100 hover:bg-green-200 wa-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png" alt="WhatsApp Icon" class="w-8 h-8 flex-shrink-0 rounded-full">
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- More Information Section (Dynamically Loaded) -->
+            <div id="more-info-section"></div>
             
         </main>
     </div>
@@ -418,6 +475,20 @@
                 .catch(error => console.error('Highlights error:', error));
         }
 
+        // --- Load More Section Logic ---
+        function loadMoreSection() {
+            const timestamp = new Date().getTime();
+            fetch(`more_section.html?v=${timestamp}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('more-info-section').innerHTML = html;
+                })
+                .catch(error => console.error('More Section error:', error));
+        }
+
         // --- API Ready ---
         window.onYouTubeIframeAPIReady = function() {
             // Initialize a hidden player just to fetch the playlist data
@@ -446,7 +517,7 @@
             setTimeout(() => {
                 const rawIds = dataPlayer.getPlaylist();
                 if (rawIds && rawIds.length > 0) {
-                    // Reverse: Last uploaded first
+                    // REVERTED: Last uploaded first (reversed order)
                     playlistVideoIds = [...rawIds].reverse();
                     buildCarousel(playlistVideoIds);
                 } else {
@@ -576,6 +647,7 @@
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
             loadHighlights();
+            loadMoreSection(); // Load the new More section
         });
 
         // Close modal on outside click
