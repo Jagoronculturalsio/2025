@@ -56,22 +56,22 @@
             
             <div class="flex items-center">
                 <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider md:mr-6">
-                    <a href="index">JAGARAN</a>
+                    <a href="index.html">JAGARAN</a>
                 </div>
-                <a href="index" id="homeButton" 
+                <a href="index.html" id="homeButton" 
                    class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
                     Home
                 </a>
             </div>
             
             <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
-                <a href="about" 
+                <a href="about.html" 
                    class="nav-button nav-active text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg transition duration-300">
                    About
                 </a>
-                <a href="contact" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
-                <a href="location" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
-                <a href="ticket" id="navTicketButton" 
+                <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="location.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <a href="ticket.html" id="navTicketButton" 
                     class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
                     Ticket
                 </a>
@@ -89,7 +89,7 @@
                 
                 <div class="text-gray-600 space-y-6 text-lg">
                     <p>
-                        JAGARAN is more than just a cultural program; it is an annual pilgrimage for artists, performers, and enthusiasts dedicated to celebrating the rich tapestry of our heritage. Founded a decade ago, our mission is to provide a vibrant, inclusive platform for both emerging and established talent.
+                        **JAGARAN** is more than just a cultural program; it is an annual pilgrimage for artists, performers, and enthusiasts dedicated to celebrating the rich tapestry of our heritage. Founded a decade ago, our mission is to provide a vibrant, inclusive platform for both emerging and established talent.
                     </p>
                     <p>
                         The word "Jagoron" translates to 'Awakening,' and that is precisely what we strive to achieve—to awaken the community to the power, beauty, and relevance of traditional and contemporary art forms. Every year, our festival features a diverse range of events, including classical dance, modern music, dramatic theatre, literary discussions, and visual art exhibitions.
@@ -156,6 +156,8 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
     </script>
+
+    <!-- Easy Contact Floating Buttons -->
+    <script src="easy_contact.js"></script>
 </body>
 </html>
-
