@@ -1,33 +1,36 @@
-<section class="bg-red-50 py-10 rounded-xl mt-12 text-black shadow-sm border border-red-100">
-    <div class="container mx-auto px-4 text-center">
+<section class="bg-red-50 py-8 rounded-xl mt-8 text-black shadow-sm border border-red-100">
+    <div class="container mx-auto px-2 text-center">
         <!-- Title -->
-        <h2 class="text-3xl font-extrabold mb-8 border-b-2 border-black inline-block pb-2">More</h2>
+        <h2 class="text-xl md:text-2xl font-extrabold mb-6 border-b-2 border-black inline-block pb-1">More</h2>
         
-        <!-- Links in 3 Columns (Mobile) / 5 Columns (Desktop) -->
-        <div class="grid grid-cols-3 md:grid-cols-5 gap-4 max-w-4xl mx-auto text-sm md:text-lg font-semibold justify-items-center">
+        <!-- Links Container: Using Flexbox for perfect centering -->
+        <!-- 'justify-center' ensures items are centered horizontally -->
+        <!-- 'flex-wrap' allows items to wrap to the next line -->
+        <div class="flex flex-wrap justify-center gap-3 md:gap-4 max-w-5xl mx-auto">
             
             <!-- Item 1 -->
-            <a href="about.html" class="flex items-center justify-center w-full py-3 bg-white/60 hover:bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200">
+            <!-- w-[30%] ensures 3 items per row on mobile (approx 33% space with gaps) -->
+            <!-- md:w-[18%] ensures 5 items per row on desktop (approx 20% space with gaps) -->
+            <a href="about.html" class="flex items-center justify-center w-[30%] md:w-[18%] py-3 px-1 bg-white/70 hover:bg-white rounded-md shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200 text-xs md:text-sm font-semibold truncate">
                 About
             </a>
             
             <!-- Item 2 -->
-            <a href="contact.html" class="flex items-center justify-center w-full py-3 bg-white/60 hover:bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200">
+            <a href="contact.html" class="flex items-center justify-center w-[30%] md:w-[18%] py-3 px-1 bg-white/70 hover:bg-white rounded-md shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200 text-xs md:text-sm font-semibold truncate">
                 Contact
             </a>
             
             <!-- Item 3 -->
-            <a href="location.html" class="flex items-center justify-center w-full py-3 bg-white/60 hover:bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200">
+            <a href="location.html" class="flex items-center justify-center w-[30%] md:w-[18%] py-3 px-1 bg-white/70 hover:bg-white rounded-md shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200 text-xs md:text-sm font-semibold truncate">
                 Location
             </a>
             
             <!-- Item 4 -->
-            <a href="ticket.html" class="flex items-center justify-center w-full py-3 bg-white/60 hover:bg-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200">
+            <a href="ticket.html" class="flex items-center justify-center w-[30%] md:w-[18%] py-3 px-1 bg-white/70 hover:bg-white rounded-md shadow-sm hover:shadow-md transition duration-300 border border-transparent hover:border-red-200 text-xs md:text-sm font-semibold truncate">
                 Ticket
             </a>
 
-            <!-- Placeholder for future items to maintain grid alignment -->
-            <!-- <div class="hidden md:block"></div> -->
+            <!-- Future items will automatically center in the next row if needed -->
 
         </div>
     </div>
