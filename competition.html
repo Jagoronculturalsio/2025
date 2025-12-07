@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGARAN Competitions</title>
+    <!-- Favicon (Logo) -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczPmjoIECTGEfcWkaRlF8HQMVrke6cR-uwCwPh2fKQ1udF_S9AKbrBYddkdrKIvePmjo-WjpcVIaH6ydMkgkyicUcG_WFTYq3RuB0Rw8VEyBvcxkWmOqAt8POWdC1q_MdHKg9_p7evmf23hJWsNU4V9_=w919-h919-s-no-gm?authuser=0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* --- Navigation Styles (Matches Index Page) --- */
+        .nav-button:hover {
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .nav-active {
+            background-color: #4f46e5; 
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-active:hover {
+            background-color: #4338ca;
+            color: #ffffff;
+        }
+        .nav-transparent {
+            background-color: rgba(255, 255, 255, 0.3); 
+            backdrop-filter: blur(8px);
+        }
+        
+        /* Competition Card Styles */
+        .comp-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .comp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .comp-header {
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Card Background Patterns (Simple CSS patterns) */
+        .bg-pattern-1 { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); } /* Teal for Calligraphy */
+        .bg-pattern-2 { background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%); } /* Blue for Photography */
+        .bg-pattern-3 { background: linear-gradient(135deg, #be185d 0%, #ec4899 100%); } /* Pink for Reels */
+        
+        .list-icon-check {
+            color: #16a34a; /* green-600 */
+            flex-shrink: 0;
+            margin-right: 0.5rem;
+        }
+        .scan-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            background: #f8fafc;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    
+    <!-- Header -->
+    <header class="w-full flex justify-center sticky top-0 z-50 nav-transparent shadow-lg mb-12">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center py-4 md:py-6">
+            
+            <div class="flex items-center">
+                <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider md:mr-6">
+                    <a href="index.html">JAGARAN</a>
+                </div>
+                <a href="index.html" id="homeButton" 
+                   class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
+                    Home
+                </a>
+            </div>
+            
+            <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
+                <a href="about.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="location.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <a href="ticket.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Ticket</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="app" class="container mx-auto p-4 md:p-8 pt-0"> 
+        <main class="space-y-12">
+            
+            <!-- Hero Title -->
+            <section class="text-center max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
+                    JAGARAN <span class="text-indigo-600">Competitions</span>
+                </h1>
+                <p class="text-xl text-gray-500">
+                    Express yourself, compete with the best, and win prestigious awards. Choose your category and register today!
+                </p>
+            </section>
+
+            <!-- Competition Cards Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- 1. Arabic Calligraphy Competition -->
+                <article class="comp-card shadow-lg flex flex-col h-full">
+                    <div class="comp-header bg-pattern-1">
+                        <div class="absolute top-4 right-4 opacity-20">
+                            <i data-lucide="pen-tool" class="w-24 h-24"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Arabic Calligraphy</h2>
+                        <p class="text-teal-100 font-medium">Art of the Written Word</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-6 space-y-3">
+                            <div class="flex items-center text-gray-700">
+                                <i data-lucide="calendar" class="w-5 h-5 mr-3 text-teal-600"></i>
+                                <span class="font-semibold">Submission: 30 Nov - 17 Dec</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i data-lucide="trophy" class="w-5 h-5 mr-3 text-teal-600"></i>
+                                <span>Award Ceremony: 28 Dec 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6 flex-grow">
+                            <h3 class="font-bold text-gray-800 mb-3 border-b pb-2">Rules & Guidelines</h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-teal-500 mt-0.5"></i> Canvas: A3 (30x42cm) or A2 (40x60cm)</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-teal-500 mt-0.5"></i> Artwork must be handwritten</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-teal-500 mt-0.5"></i> One participant, one artwork</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-teal-500 mt-0.5"></i> Decoration should not override calligraphy</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-teal-500 mt-0.5"></i> Artist signature is required</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto">
+                            <p class="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Contact for details</p>
+                            <div class="flex flex-col space-y-1 text-gray-700 font-medium">
+                                <a href="tel:+918509349129" class="hover:text-teal-600 transition flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> +91 8509349129</a>
+                                <a href="tel:+916289073108" class="hover:text-teal-600 transition flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> +91 6289073108</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. Photography Competition -->
+                <article class="comp-card shadow-lg flex flex-col h-full">
+                    <div class="comp-header bg-pattern-2">
+                        <div class="absolute top-4 right-4 opacity-20">
+                            <i data-lucide="camera" class="w-24 h-24"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Photography</h2>
+                        <p class="text-blue-100 font-medium">Capture the Moment</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-6 space-y-3">
+                            <div class="flex items-center text-gray-700">
+                                <i data-lucide="focus" class="w-5 h-5 mr-3 text-blue-600"></i>
+                                <span class="font-semibold">Theme: "Manobota" (Humanity)</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i data-lucide="calendar-clock" class="w-5 h-5 mr-3 text-blue-600"></i>
+                                <span>Deadline: 20th Dec 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6 flex-grow">
+                            <h3 class="font-bold text-gray-800 mb-3 border-b pb-2">Rules & Guidelines</h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-blue-500 mt-0.5"></i> Max 1 photo per participant</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-blue-500 mt-0.5"></i> Mobile & DSLR both accepted</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-blue-500 mt-0.5"></i> Format: JPEG or JPG</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-blue-500 mt-0.5"></i> Original work required</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto">
+                            <p class="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Contact for details</p>
+                            <div class="flex flex-col space-y-1 text-gray-700 font-medium">
+                                <a href="tel:+917872965156" class="hover:text-blue-600 transition flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> +91 7872965156</a>
+                                <a href="tel:+919635799760" class="hover:text-blue-600 transition flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> +91 9635799760</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. Reels Making Competition -->
+                <article class="comp-card shadow-lg flex flex-col h-full">
+                    <div class="comp-header bg-pattern-3">
+                        <div class="absolute top-4 right-4 opacity-20">
+                            <i data-lucide="instagram" class="w-24 h-24"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Reels Making</h2>
+                        <p class="text-pink-100 font-medium">Festive Creativity</p>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-6 space-y-3">
+                            <div class="flex items-center text-gray-700">
+                                <i data-lucide="clapperboard" class="w-5 h-5 mr-3 text-pink-600"></i>
+                                <span class="font-semibold">Theme: Jagaran Festival</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i data-lucide="calendar-clock" class="w-5 h-5 mr-3 text-pink-600"></i>
+                                <span>Deadline: 20th Dec 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6 flex-grow">
+                            <h3 class="font-bold text-gray-800 mb-3 border-b pb-2">Rules & Guidelines</h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-pink-500 mt-0.5"></i> Max 1 video per participant</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-pink-500 mt-0.5"></i> Duration: 50s - 59s</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-pink-500 mt-0.5"></i> Ratio: 9:16 (Portrait Mode)</li>
+                                <li class="flex items-start"><i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-pink-500 mt-0.5"></i> Must be self-made (No downloads)</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto">
+                            <p class="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Contact for details</p>
+                            <div class="flex flex-col space-y-1 text-gray-700 font-medium">
+                                <a href="tel:+917872965156" class="hover:text-pink-600 transition flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> +91 7872965156</a>
+                                <a href="tel:+917699711990" class="hover:text-pink-600 transition flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> +91 7699711990</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Footer Note -->
+            <div class="text-center text-gray-500 mt-12 pb-8">
+                <p>Scan the QR codes on official posters or contact the coordinators to submit your entries.</p>
+                <div class="mt-4">
+                    <a href="index.html" class="text-indigo-600 font-semibold hover:underline">Back to Home</a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
+        <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
+    </footer>
+
+    <!-- Easy Contact Floating Buttons -->
+    <script src="easy_contact.js"></script>
+    
+    <script>
+        // Initialize Lucide Icons
+        window.addEventListener('load', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+        
+        // Firebase boilerplate
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+    </script>
+</body>
+</html>
