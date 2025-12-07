@@ -118,6 +118,8 @@
             overflow: hidden;
             width: 100%;
             perspective: 1000px;
+            /* Added touch-action for better swipe handling */
+            touch-action: pan-y;
         }
         @media (min-width: 768px) {
             .carousel-wrapper {
@@ -205,6 +207,31 @@
             opacity: 1;
             transform: scale(1);
         }
+
+        /* Navigation Buttons */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #4f46e5;
+            border-radius: 50%;
+            padding: 0.75rem;
+            cursor: pointer;
+            z-index: 40; /* Above cards */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-arrow:hover {
+            background-color: #fff;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .nav-prev { left: 10px; }
+        .nav-next { right: 10px; }
 
         /* Modal Styles */
         .video-modal {
@@ -393,15 +420,27 @@
             </section>
 
             <!-- NEW Playlist Carousel (Custom 3D Slider) -->
-            <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-6xl mx-auto overflow-hidden">
+            <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-6xl mx-auto overflow-hidden relative group">
                 <h2 class="text-3xl font-bold text-gray-700 mb-8 text-center">JAGARAN Playlist</h2>
                 
                 <!-- Carousel Container -->
-                <div id="custom-carousel" class="carousel-wrapper">
-                    <div class="text-center text-gray-500">Loading Videos...</div>
+                <div class="relative w-full flex justify-center items-center">
+                    
+                    <!-- Prev Button (Manual Control) -->
+                    <button onclick="prevSlide()" class="nav-arrow nav-prev" aria-label="Previous Video">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+
+                    <div id="custom-carousel" class="carousel-wrapper">
+                        <div class="text-center text-gray-500">Loading Videos...</div>
+                    </div>
+
+                    <!-- Next Button (Manual Control) -->
+                    <button onclick="nextSlide()" class="nav-arrow nav-next" aria-label="Next Video">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                    
                 </div>
-                
-                <!-- Instructions Removed -->
             </section>
 
             <!-- Social Media Links (Added) -->
@@ -600,11 +639,9 @@
 
         function onDataPlayerReady(event) {
             // Fetch playlist IDs
-            // Note: getPlaylist() might take a moment
             setTimeout(() => {
                 const rawIds = dataPlayer.getPlaylist();
                 if (rawIds && rawIds.length > 0) {
-                    // REVERTED: Last uploaded first (reversed order)
                     playlistVideoIds = [...rawIds].reverse();
                     buildCarousel(playlistVideoIds);
                 } else {
@@ -617,6 +654,32 @@
         function buildCarousel(ids) {
             const container = document.getElementById('custom-carousel');
             container.innerHTML = ''; // Clear loading text
+
+            // Touch events variables
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            // Touch Start
+            container.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+
+            // Touch End
+            container.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+
+            function handleSwipe() {
+                const SWIPE_THRESHOLD = 50;
+                if (touchEndX < touchStartX - SWIPE_THRESHOLD) {
+                    // Swiped Left -> Next
+                    nextSlide();
+                } else if (touchEndX > touchStartX + SWIPE_THRESHOLD) {
+                    // Swiped Right -> Prev
+                    prevSlide();
+                }
+            }
 
             // Create card elements
             ids.forEach((id, index) => {
@@ -637,8 +700,7 @@
                     if (card.classList.contains('c-center')) {
                         openVideoModal(id);
                     } else {
-                        // Optional: Click side card to center it immediately? 
-                        // For now, let's strictly follow the automatic loop or just play center.
+                        // Optional click-to-nav could be added here
                     }
                 };
 
@@ -659,11 +721,7 @@
                 card.className = 'c-card';
 
                 // Calculate relative position
-                // We need circular logic relative to currentIndex
                 let diff = (i - currentIndex + total) % total; 
-                // diff = 0 -> Center
-                // diff = 1 -> Right
-                // diff = total-1 -> Left (equivalent to -1)
                 
                 if (diff === 0) {
                     card.classList.add('c-center');
@@ -673,7 +731,6 @@
                     card.classList.add('c-left');
                 } else {
                     // Hidden items
-                    // Decide if hidden left or hidden right based on proximity
                     if (diff < total / 2) {
                         card.classList.add('c-hidden-right');
                     } else {
@@ -693,6 +750,28 @@
 
         function stopLoop() {
             if (carouselInterval) clearInterval(carouselInterval);
+        }
+
+        // --- Manual Navigation ---
+        function resetLoop() {
+            stopLoop();
+            startLoop();
+        }
+
+        function nextSlide() {
+            const total = playlistVideoIds.length;
+            if (total === 0) return;
+            currentIndex = (currentIndex + 1) % total;
+            updateCarouselView();
+            resetLoop();
+        }
+
+        function prevSlide() {
+            const total = playlistVideoIds.length;
+            if (total === 0) return;
+            currentIndex = (currentIndex - 1 + total) % total;
+            updateCarouselView();
+            resetLoop();
         }
 
         // --- Modal Player Logic ---
