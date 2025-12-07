@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAGARAN About</title>
+    <title>About JAGARAN</title>
     <!-- Favicon (Logo) -->
     <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczPmjoIECTGEfcWkaRlF8HQMVrke6cR-uwCwPh2fKQ1udF_S9AKbrBYddkdrKIvePmjo-WjpcVIaH6ydMkgkyicUcG_WFTYq3RuB0Rw8VEyBvcxkWmOqAt8POWdC1q_MdHKg9_p7evmf23hJWsNU4V9_=w919-h919-s-no-gm?authuser=0">
     <!-- Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +14,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f7f7f7;
         }
-        /* --- Navigation Styles (Matches Index Page) --- */
+        /* --- Navigation Styles --- */
         .nav-button:hover {
             color: #4f46e5;
             background-color: #eef2ff;
@@ -33,18 +33,16 @@
             backdrop-filter: blur(8px);
         }
         
-        /* Content Card Styles */
-        .about-card {
+        /* Card Styles */
+        .info-card {
             background-color: white;
             border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
         }
-        .cta-button {
-            transition: background-color 0.3s ease, transform 0.1s;
-        }
-        .cta-button:active {
-            transform: scale(0.98);
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -56,22 +54,22 @@
             
             <div class="flex items-center">
                 <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider md:mr-6">
-                    <a href="index">JAGARAN</a>
+                    <a href="index.html">JAGARAN</a>
                 </div>
-                <a href="index" id="homeButton" 
+                <a href="index.html" id="homeButton" 
                    class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
                     Home
                 </a>
             </div>
             
             <nav class="flex space-x-0.5 md:space-x-4 font-semibold">
-                <a href="about" 
+                <a href="about.html" 
                    class="nav-button nav-active text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg transition duration-300">
                    About
                 </a>
-                <a href="contact" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
-                <a href="location" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
-                <a href="ticket" id="navTicketButton" 
+                <a href="contact.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="location.html" class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <a href="ticket.html" id="navTicketButton" 
                     class="nav-button text-xs px-1.5 py-0.5 md:text-base md:px-4 md:py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">
                     Ticket
                 </a>
@@ -80,72 +78,181 @@
     </header>
 
     <div id="app" class="container mx-auto p-4 md:p-8 pt-0"> 
-        <main class="space-y-12 pt-12">
+        <main class="space-y-16">
             
-            <section id="about" class="about-card">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-700 mb-6 border-b pb-3">
-                    About JAGARAN - The Annual Cultural Awakening
+            <!-- Intro Section -->
+            <section class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-black text-gray-800 mb-6">
+                    About <span class="text-indigo-600">JAGARAN</span>
                 </h1>
-                
-                <div class="text-gray-600 space-y-6 text-lg">
-                    <p>
-                        JAGARAN is more than just a cultural program; it is an annual pilgrimage for artists, performers, and enthusiasts dedicated to celebrating the rich tapestry of our heritage. Founded a decade ago, our mission is to provide a vibrant, inclusive platform for both emerging and established talent.
-                    </p>
-                    <p>
-                        The word "Jagoron" translates to 'Awakening,' and that is precisely what we strive to achieve—to awaken the community to the power, beauty, and relevance of traditional and contemporary art forms. Every year, our festival features a diverse range of events, including classical dance, modern music, dramatic theatre, literary discussions, and visual art exhibitions.
-                    </p>
-                    
-                    <h2 class="text-2xl font-bold text-gray-800 pt-4 pb-2">Our Vision</h2>
-                    <p>
-                        We envision a world where culture is a continuous, living dialogue. JAGORON aims to foster cross-cultural understanding and inspire the next generation of creative minds. We believe that by creating an immersive and dynamic environment, we can help preserve artistic traditions while embracing modern expressions.
-                    </p>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    The <strong>"Jagaran Cultural Festival"</strong> is a historic initiative by <em>Tamaddun Shilpigosthi</em>. It is not just an event, but a movement to revive value-based culture and provide a refreshing escape from the busyness of daily life.
+                </p>
+            </section>
 
-                    <h2 class="text-2xl font-bold text-gray-800 pt-4 pb-2">What to Expect</h2>
-                    <ul class="list-disc list-inside space-y-2 pl-4">
-                        <li>**Diverse Performances:** From intricate classical routines to energetic contemporary fusion.</li>
-                        <li>**Workshops & Masterclasses:** Opportunities to learn directly from celebrated artists.</li>
-                        <li>**Artisan Bazaar:** Showcasing traditional crafts and local artistry.</li>
-                        <li>**Culinary Delights:** A selection of regional and international food experiences.</li>
-                    </ul>
+            <!-- Mission & Vision -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="info-card p-8 border-l-4 border-indigo-500">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="target" class="w-8 h-8 text-indigo-600 mr-3"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">Our Mission</h2>
+                    </div>
+                    <p class="text-gray-600">
+                        To counter vulgarity and cultural degradation by promoting an educational and enlightening culture. We believe culture reflects the stories of joy, sorrow, and emotions, and has the power to spark a revolution in society's mindset.
+                    </p>
+                </div>
+                <div class="info-card p-8 border-l-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="eye" class="w-8 h-8 text-purple-600 mr-3"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">Our Vision</h2>
+                    </div>
+                    <p class="text-gray-600">
+                        To build a healthy society through the practice of wholesome culture. We aim to bring together families, friends, and relatives under one roof to celebrate art, values, and humanity.
+                    </p>
                 </div>
             </section>
 
+            <!-- What to Expect (Highlights) -->
+            <section>
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800">What to Expect</h2>
+                    <div class="h-1 w-20 bg-indigo-500 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Cultural Events -->
+                    <div class="info-card p-6 text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="music" class="w-8 h-8 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Cultural Extravaganza</h3>
+                        <p class="text-gray-600 text-sm">
+                            Drama, Short-film screenings, Musical performances, Poetry, Mimicry, Mono acts, and Children's group presentations.
+                        </p>
+                    </div>
+
+                    <!-- Star Guest -->
+                    <div class="info-card p-6 text-center transform scale-105 border-2 border-indigo-100">
+                        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="mic-2" class="w-8 h-8 text-purple-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Special Guest</h3>
+                        <p class="text-gray-600 text-sm">
+                            An exclusive evening with the nationally acclaimed singer, <strong>Dr. Haidar Saif</strong>, known for his cultural depth.
+                        </p>
+                    </div>
+
+                    <!-- Exhibitions -->
+                    <div class="info-card p-6 text-center">
+                        <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="image" class="w-8 h-8 text-teal-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Exhibitions & Art</h3>
+                        <p class="text-gray-600 text-sm">
+                            Curated exhibitions on "Values of Life" and "Social Issues", along with captivating Calligraphy showcases.
+                        </p>
+                    </div>
+
+                    <!-- Competitions -->
+                    <div class="info-card p-6 text-center">
+                        <div class="bg-rose-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="trophy" class="w-8 h-8 text-rose-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Competitions</h3>
+                        <p class="text-gray-600 text-sm">
+                            Exciting contests in <strong>Arabic Calligraphy</strong>, <strong>Photography</strong> (Theme: Humanity), and <strong>Reels Making</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Kids Zone -->
+                    <div class="info-card p-6 text-center">
+                        <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="smile" class="w-8 h-8 text-orange-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Kids' Zone</h3>
+                        <p class="text-gray-600 text-sm">
+                            A dedicated immersive Playground and Game Zone for children to enjoy.
+                        </p>
+                    </div>
+
+                    <!-- Stalls -->
+                    <div class="info-card p-6 text-center">
+                        <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="store" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Open Stalls</h3>
+                        <p class="text-gray-600 text-sm">
+                            Spaces for stalls showcasing products, crafts, and interactive activities for visitors.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Event Details Banner -->
+            <section class="bg-indigo-900 rounded-2xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+                <!-- Background Pattern -->
+                <div class="absolute top-0 right-0 opacity-10 transform translate-x-1/3 -translate-y-1/3">
+                    <i data-lucide="calendar" class="w-64 h-64"></i>
+                </div>
+
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl font-bold mb-4">Save the Date!</h2>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i data-lucide="calendar-check" class="w-6 h-6 mr-3 text-indigo-300"></i>
+                                <span class="text-xl">December 28, 2025</span>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i data-lucide="clock" class="w-6 h-6 mr-3 text-indigo-300"></i>
+                                <span class="text-xl">12:00 PM Onwards</span>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i data-lucide="map-pin" class="w-6 h-6 mr-3 text-indigo-300"></i>
+                                <span class="text-xl">Gopalpur House, Rajarhat, N 24 PGS</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col gap-4 min-w-[200px]">
+                         <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg text-center">
+                            <span class="block text-3xl font-bold text-indigo-300">1500+</span>
+                            <span class="text-sm text-indigo-100">Delegates Expected</span>
+                        </div>
+                        <button onclick="window.location.href='ticket.html'" 
+                            class="bg-white text-indigo-900 font-bold py-3 px-8 rounded-lg hover:bg-indigo-50 transition shadow-lg flex items-center justify-center">
+                            Book Your Seat
+                            <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact CTA -->
             <section class="text-center py-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Want to Know Our Story?</h2>
-                <p class="text-gray-500 mb-6">Read our detailed history and meet the organizing committee.</p>
-                <button 
-                    class="cta-button bg-indigo-500 text-white font-semibold px-8 py-3 rounded-full hover:bg-indigo-700 transition duration-300 shadow-lg"
-                    onclick="showCustomAlert('This button will link to a detailed history page and introduce the team.')">
-                    Meet the Team
-                </button>
+                <p class="text-gray-500 mb-6">Have questions or want to participate?</p>
+                <div class="flex justify-center gap-4">
+                    <a href="contact.html" class="inline-flex items-center text-indigo-600 font-semibold hover:text-indigo-800 transition">
+                        Contact Us <i data-lucide="chevron-right" class="ml-1 w-4 h-4"></i>
+                    </a>
+                    <a href="competition.html" class="inline-flex items-center text-indigo-600 font-semibold hover:text-indigo-800 transition">
+                        Join Competitions <i data-lucide="chevron-right" class="ml-1 w-4 h-4"></i>
+                    </a>
+                </div>
             </section>
 
         </main>
     </div>
 
-    <!-- Footer (Copied from Index) -->
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
         <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
     </footer>
 
-    <script>
-        function showCustomAlert(message) {
-            console.log("Custom Alert:", message);
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[9999]';
-            modal.innerHTML = `
-                <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm mx-4 space-y-4">
-                    <h3 class="text-xl font-bold text-indigo-700">Information</h3>
-                    <p class="text-gray-700">${message}</p>
-                    <button onclick="this.parentNode.parentNode.remove()" 
-                        class="w-full bg-indigo-500 text-white font-semibold py-2 rounded-lg hover:bg-indigo-600 transition duration-300 cta-button">
-                        Close
-                    </button>
-                </div>
-            `;
-            document.body.appendChild(modal);
-        }
+    <!-- Easy Contact Floating Buttons -->
+    <script src="easy_contact.js"></script>
 
+    <script>
         window.addEventListener('load', () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -158,4 +265,3 @@
     </script>
 </body>
 </html>
-
