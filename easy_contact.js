@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. WhatsApp Button (Top) ---
     const whatsappBtn = document.createElement('a');
     // Using country code +91 for India as the number suggests
-    whatsappBtn.href = 'https://wa.me/919083463914'; 
+    whatsappBtn.href = 'https://wa.me/9179084954'; 
     whatsappBtn.target = '_blank'; // Open in new tab
     whatsappBtn.setAttribute('aria-label', 'Chat on WhatsApp');
     // Tailwind classes for styling (Green color)
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. Phone Call Button (Bottom) ---
     const phoneBtn = document.createElement('a');
-    phoneBtn.href = 'tel:9083463914';
+    phoneBtn.href = 'tel:79084954';
     phoneBtn.setAttribute('aria-label', 'Call Us');
     // Tailwind classes for styling (Blue color)
     phoneBtn.className = 'bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center';
