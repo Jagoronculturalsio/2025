@@ -612,6 +612,34 @@
             }
         }
 
+        // --- NEW: Toggle Inner Highlights Logic ---
+        function toggleInnerHighlights() {
+            const hiddenDiv = document.getElementById('innerHighlights');
+            const btnText = document.getElementById('innerHighlightsBtnText');
+            const btnIcon = document.getElementById('innerHighlightsBtnIcon');
+            const highlightsContent = document.getElementById('highlights-content'); // Outer container
+
+            if (hiddenDiv.classList.contains('hidden')) {
+                hiddenDiv.classList.remove('hidden');
+                hiddenDiv.classList.add('flex');
+                btnText.innerText = 'See Less';
+                btnIcon.classList.add('rotate-180');
+            } else {
+                hiddenDiv.classList.add('hidden');
+                hiddenDiv.classList.remove('flex');
+                btnText.innerText = 'See More';
+                btnIcon.classList.remove('rotate-180');
+            }
+
+            // Recalculate and update the outer container height to prevent cutting off content
+            // We use setTimeout to allow the DOM to update first
+            setTimeout(() => {
+                if (highlightsContent.style.maxHeight !== '0px') {
+                    highlightsContent.style.maxHeight = highlightsContent.scrollHeight + "px";
+                }
+            }, 10);
+        }
+
         // --- Load CTA Section Logic (NEW) ---
         function loadCTASection() {
             const timestamp = new Date().getTime();
