@@ -583,29 +583,22 @@
             }
         }
 
-        // --- Toggle Inner Highlights Logic (Updated for Robustness) ---
+        // --- Toggle Inner Highlights Logic (Updated for simpler container) ---
         function toggleInnerHighlights() {
             const hiddenDiv = document.getElementById('innerHighlights');
             const btnText = document.getElementById('innerHighlightsBtnText');
             const btnIcon = document.getElementById('innerHighlightsBtnIcon');
             
-            // Remove 'hidden' class if it exists (safety fallback)
-            hiddenDiv.classList.remove('hidden');
-
-            const isExpanded = hiddenDiv.style.maxHeight && hiddenDiv.style.maxHeight !== '0px';
-
-            if (!isExpanded) {
-                // Expand
-                // Use a generous fallback if scrollHeight is suspiciously low (e.g. 0)
-                const height = hiddenDiv.scrollHeight > 0 ? hiddenDiv.scrollHeight : 2000;
-                hiddenDiv.style.maxHeight = height + "px";
-                hiddenDiv.style.opacity = "1"; // Ensure opacity is 1
+            // Just toggle the display of the inner div. 
+            // The parent container (highlights-content) will naturally expand.
+            if (hiddenDiv.classList.contains('hidden')) {
+                hiddenDiv.classList.remove('hidden');
+                hiddenDiv.classList.add('flex');
                 btnText.innerText = 'See Less';
                 btnIcon.classList.add('rotate-180');
             } else {
-                // Collapse
-                hiddenDiv.style.maxHeight = '0px';
-                hiddenDiv.style.opacity = "0"; // Fade out
+                hiddenDiv.classList.add('hidden');
+                hiddenDiv.classList.remove('flex');
                 btnText.innerText = 'See More';
                 btnIcon.classList.remove('rotate-180');
             }
