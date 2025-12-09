@@ -88,14 +88,15 @@
         }
 
         /* Highlights & Brochure Toggle */
-        .highlights-collapse, .brochure-collapse {
+        /* Note: highlights-collapse removed from highlights section, kept for brochure */
+        .brochure-collapse {
             overflow: hidden;
             transition: max-height 0.5s ease-in-out; 
         }
         .rotated-icon {
             transform: rotate(180deg) !important;
         }
-        #toggleHighlightsBtn, #toggleBrochureBtn {
+        #toggleBrochureBtn {
             min-width: 280px;
         }
 
@@ -366,19 +367,9 @@
                 </div>
             </section>
             
-            <!-- Highlights Section (Dynamically Loaded) -->
-            <section id="highlights-toggle-section" class="max-w-4xl mx-auto py-8">
-                <div class="text-center">
-                    <button id="toggleHighlightsBtn" 
-                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 flex items-center justify-center mx-auto"
-                        aria-expanded="false" 
-                        aria-controls="highlights-content">
-                        Highlights of Festival
-                        <svg id="toggleIcon" class="w-5 h-5 ml-2 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                </div>
-                
-                <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
+            <!-- Highlights Section (UPDATED: Always Visible) -->
+            <section id="highlights-section" class="max-w-4xl mx-auto py-8">
+                <div id="highlights-content" class="mt-6">
                     <div class="text-center text-gray-500 py-4">Loading...</div>
                 </div>
             </section>
@@ -520,32 +511,12 @@
         let currentIndex = 0;
         
         // --- Highlights Logic ---
-        const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
-        const highlightsContent = document.getElementById('highlights-content');
-        const toggleIcon = document.getElementById('toggleIcon');
-
-        function toggleHighlights() {
-            const isExpanded = toggleHighlightsBtn.getAttribute('aria-expanded') === 'true';
-            if (isExpanded) {
-                highlightsContent.style.maxHeight = '0';
-                toggleHighlightsBtn.setAttribute('aria-expanded', 'false');
-                toggleIcon.classList.remove('rotated-icon');
-            } else {
-                highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
-                toggleHighlightsBtn.setAttribute('aria-expanded', 'true');
-                toggleIcon.classList.add('rotated-icon');
-            }
-        }
-        
         function loadHighlights() {
             const timestamp = new Date().getTime();
             fetch(`highlights.html?v=${timestamp}`)
                 .then(response => response.text())
                 .then(html => {
-                    highlightsContent.innerHTML = html;
-                    if (toggleHighlightsBtn.getAttribute('aria-expanded') === 'true') {
-                         highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
-                    }
+                    document.getElementById('highlights-content').innerHTML = html;
                 })
                 .catch(error => console.error('Highlights error:', error));
         }
@@ -612,13 +583,14 @@
             }
         }
 
-        // --- NEW: Toggle Inner Highlights Logic ---
+        // --- Toggle Inner Highlights Logic (Updated for simpler container) ---
         function toggleInnerHighlights() {
             const hiddenDiv = document.getElementById('innerHighlights');
             const btnText = document.getElementById('innerHighlightsBtnText');
             const btnIcon = document.getElementById('innerHighlightsBtnIcon');
-            const highlightsContent = document.getElementById('highlights-content'); // Outer container
-
+            
+            // Just toggle the display of the inner div. 
+            // The parent container (highlights-content) will naturally expand.
             if (hiddenDiv.classList.contains('hidden')) {
                 hiddenDiv.classList.remove('hidden');
                 hiddenDiv.classList.add('flex');
@@ -630,17 +602,9 @@
                 btnText.innerText = 'See More';
                 btnIcon.classList.remove('rotate-180');
             }
-
-            // Recalculate and update the outer container height to prevent cutting off content
-            // We use setTimeout to allow the DOM to update first
-            setTimeout(() => {
-                if (highlightsContent.style.maxHeight !== '0px') {
-                    highlightsContent.style.maxHeight = highlightsContent.scrollHeight + "px";
-                }
-            }, 10);
         }
 
-        // --- Load CTA Section Logic (NEW) ---
+        // --- Load CTA Section Logic ---
         function loadCTASection() {
             const timestamp = new Date().getTime();
             fetch(`cta.html?v=${timestamp}`)
@@ -862,13 +826,11 @@
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-            if (toggleHighlightsBtn) {
-                toggleHighlightsBtn.addEventListener('click', toggleHighlights);
-            }
+            // Removed toggleHighlightsBtn listener since button is gone
             loadHighlights();
-            loadCTASection(); // Load the new CTA Section
-            loadMoreSection(); // Load the new More section
-            loadBrochure(); // Load the Brochure
+            loadCTASection(); 
+            loadMoreSection(); 
+            loadBrochure(); 
         });
 
         // Close modal on outside click
