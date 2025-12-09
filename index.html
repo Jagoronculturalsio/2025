@@ -583,28 +583,31 @@
             }
         }
 
-        // --- Toggle Inner Highlights Logic (Updated for simpler container) ---
+        // --- Toggle Inner Highlights Logic (Updated for Smooth Transition) ---
         function toggleInnerHighlights() {
             const hiddenDiv = document.getElementById('innerHighlights');
             const btnText = document.getElementById('innerHighlightsBtnText');
             const btnIcon = document.getElementById('innerHighlightsBtnIcon');
             
-            // Just toggle the display of the inner div. 
-            // The parent container (highlights-content) will naturally expand.
-            if (hiddenDiv.classList.contains('hidden')) {
-                hiddenDiv.classList.remove('hidden');
-                hiddenDiv.classList.add('flex');
+            // Check if currently expanded by checking opacity or max-height
+            const isExpanded = hiddenDiv.style.opacity === '1';
+
+            if (!isExpanded) {
+                // Expand
+                hiddenDiv.style.maxHeight = hiddenDiv.scrollHeight + "px";
+                hiddenDiv.style.opacity = '1';
                 btnText.innerText = 'See Less';
                 btnIcon.classList.add('rotate-180');
             } else {
-                hiddenDiv.classList.add('hidden');
-                hiddenDiv.classList.remove('flex');
+                // Collapse
+                hiddenDiv.style.maxHeight = '0';
+                hiddenDiv.style.opacity = '0';
                 btnText.innerText = 'See More';
                 btnIcon.classList.remove('rotate-180');
             }
         }
 
-        // --- Load CTA Section Logic ---
+        // --- Load CTA Section Logic (NEW) ---
         function loadCTASection() {
             const timestamp = new Date().getTime();
             fetch(`cta.html?v=${timestamp}`)
