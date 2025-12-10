@@ -38,22 +38,21 @@
             transform: scale(1);
             transition: opacity 300ms, transform 300ms;
         }
-        .modal-exit {
-            opacity: 1;
-        }
-        .modal-exit-active {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 200ms, transform 200ms;
-        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen font-sans">
 
-    <!-- Header Section -->
-    <header class="py-8 text-center bg-gray-800 shadow-lg mb-8 sticky top-0 z-10">
-        <h1 class="text-3xl md:text-4xl font-bold text-yellow-500">Our Photo Gallery</h1>
-        <p class="text-gray-400 mt-2">A glimpse of our special moments</p>
+    <!-- Header Section with Back Arrow -->
+    <header class="relative py-8 text-center bg-gray-800 shadow-lg mb-8 sticky top-0 z-10 flex items-center justify-center">
+        <!-- Back Arrow (Left Aligned) -->
+        <a href="index.html" class="absolute left-4 md:left-8 text-yellow-500 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700 group" aria-label="Back to Home">
+            <i class="ph ph-arrow-left text-3xl transform group-hover:-translate-x-1 transition-transform"></i>
+        </a>
+
+        <div class="flex flex-col items-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-yellow-500">Our Photo Gallery</h1>
+            <p class="text-gray-400 mt-2">A glimpse of our special moments</p>
+        </div>
     </header>
 
     <!-- Main Gallery Container -->
@@ -63,7 +62,7 @@
             
             <!-- REVERSED ORDER START -->
 
-            <!-- Image 9 (Formerly last) -->
+            <!-- Image 9 -->
             <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
                  onclick="openModal('https://scontent.fccu27-1.fna.fbcdn.net/v/t39.30808-6/581285304_122100337047117297_3264603101010652373_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=8ZFTgko1x9cQ7kNvwEZI1dC&_nc_oc=Adl0EqSk4eNBooT5SBQe_XImWSm5EfeJsufB0iEFSRGzg_5LyWg2mfDQm7AYGjrBq1dyHL0v-Uf4RrXu1p5r4m7F&_nc_zt=23&_nc_ht=scontent.fccu27-1.fna&_nc_gid=1P6v_T0_8eGc5rNkvfHvvw&oh=00_AfndShKYAkriTe2ak-lxyyAzncM2TMshqd-dXfYFpX240g&oe=693F4D35')">
                 <img src="https://scontent.fccu27-1.fna.fbcdn.net/v/t39.30808-6/581285304_122100337047117297_3264603101010652373_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=8ZFTgko1x9cQ7kNvwEZI1dC&_nc_oc=Adl0EqSk4eNBooT5SBQe_XImWSm5EfeJsufB0iEFSRGzg_5LyWg2mfDQm7AYGjrBq1dyHL0v-Uf4RrXu1p5r4m7F&_nc_zt=23&_nc_ht=scontent.fccu27-1.fna&_nc_gid=1P6v_T0_8eGc5rNkvfHvvw&oh=00_AfndShKYAkriTe2ak-lxyyAzncM2TMshqd-dXfYFpX240g&oe=693F4D35" 
@@ -143,7 +142,7 @@
                 </div>
             </div>
 
-            <!-- Image 1 (Formerly first) -->
+            <!-- Image 1 -->
             <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
                  onclick="openModal('https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/558470454_122097483729117297_8407974933122949203_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=hUuxmvsqH2AQ7kNvwHFZwYD&_nc_oc=Adm8XhnxJ6brPgGkipNbcFFlHZe-iiHLacJdcnUY0JnrUlaoum2CPdYm2o_2eTYFU1PyVD1jAxhzb8UDcPTpWlUi&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=qtUEgx2TH_vEjR9S7ropfg&oh=00_Afk6hV27lvccKgK-QwRba16o1Ga_W5iHk_G-LBxUN96_qQ&oe=693F82FF')">
                 <img src="https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/558470454_122097483729117297_8407974933122949203_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=hUuxmvsqH2AQ7kNvwHFZwYD&_nc_oc=Adm8XhnxJ6brPgGkipNbcFFlHZe-iiHLacJdcnUY0JnrUlaoum2CPdYm2o_2eTYFU1PyVD1jAxhzb8UDcPTpWlUi&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=qtUEgx2TH_vEjR9S7ropfg&oh=00_Afk6hV27lvccKgK-QwRba16o1Ga_W5iHk_G-LBxUN96_qQ&oe=693F82FF" 
@@ -173,10 +172,11 @@
             
             <!-- Bottom Controls -->
             <div class="w-full flex justify-end mt-4 px-2">
-                <a id="downloadBtn" href="#" target="_blank" download class="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full transition-all transform hover:scale-105 shadow-lg">
+                <!-- Direct Download Button using JavaScript -->
+                <button id="downloadBtn" onclick="downloadCurrentImage(event)" class="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full transition-all transform hover:scale-105 shadow-lg cursor-pointer">
                     <i class="ph ph-download-simple text-xl"></i>
                     <span>Download</span>
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -191,9 +191,6 @@
         function openModal(src) {
             modalImg.src = src;
             
-            // Set download link
-            downloadBtn.href = src;
-            
             // Show modal with animation
             modal.classList.remove('hidden');
             
@@ -204,6 +201,48 @@
             
             // Prevent body scrolling
             document.body.style.overflow = 'hidden';
+        }
+
+        // Function to force direct download without new tab
+        async function downloadCurrentImage(e) {
+            e.preventDefault();
+            const url = modalImg.src;
+            
+            // Change button text to indicate loading
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i><span>Downloading...</span>';
+
+            try {
+                // Fetch the image as a blob
+                const response = await fetch(url);
+                const blob = await response.blob();
+                
+                // Create a temporary object URL
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                // Create a temporary link element
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                // Suggest a filename
+                link.download = 'gallery-image.jpg'; 
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Clean up
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (err) {
+                console.error("Direct download failed, falling back to standard navigation:", err);
+                // Fallback: Just navigate to the URL if fetch fails (e.g. strict CORS)
+                // This replaces the current tab, but since user strictly said "no new page", 
+                // this is the closest compliant behavior if fetching fails.
+                window.location.href = url;
+            } finally {
+                // Restore button text
+                downloadBtn.innerHTML = originalText;
+            }
         }
 
         // Function to close modal
@@ -218,8 +257,6 @@
         // Close modal if clicking outside the image
         modal.addEventListener('click', (e) => {
             if (e.target === modal || e.target.closest('.flex-col') === null && e.target !== modalImg) {
-                // Check if the click was not on the image or the download button container
-                // Actually easier: check if target is the modal background div
                 if(e.target === modal) {
                     closeModal();
                 }
