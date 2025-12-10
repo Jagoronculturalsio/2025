@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons for nice icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar to look sleek */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+        
+        /* Animation for modal */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms, transform 300ms;
+        }
+        .modal-exit {
+            opacity: 1;
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 200ms, transform 200ms;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans">
+
+    <!-- Header Section -->
+    <header class="py-8 text-center bg-gray-800 shadow-lg mb-8 sticky top-0 z-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-yellow-500">Our Photo Gallery</h1>
+        <p class="text-gray-400 mt-2">A glimpse of our special moments</p>
+    </header>
+
+    <!-- Main Gallery Container -->
+    <main class="container mx-auto px-4 pb-12">
+        <!-- Grid: 1 col on mobile, 2 on tablet, 3 on desktop -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+            
+            <!-- REVERSED ORDER START -->
+
+            <!-- Image 9 (Formerly last) -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-1.fna.fbcdn.net/v/t39.30808-6/581285304_122100337047117297_3264603101010652373_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=8ZFTgko1x9cQ7kNvwEZI1dC&_nc_oc=Adl0EqSk4eNBooT5SBQe_XImWSm5EfeJsufB0iEFSRGzg_5LyWg2mfDQm7AYGjrBq1dyHL0v-Uf4RrXu1p5r4m7F&_nc_zt=23&_nc_ht=scontent.fccu27-1.fna&_nc_gid=1P6v_T0_8eGc5rNkvfHvvw&oh=00_AfndShKYAkriTe2ak-lxyyAzncM2TMshqd-dXfYFpX240g&oe=693F4D35')">
+                <img src="https://scontent.fccu27-1.fna.fbcdn.net/v/t39.30808-6/581285304_122100337047117297_3264603101010652373_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=8ZFTgko1x9cQ7kNvwEZI1dC&_nc_oc=Adl0EqSk4eNBooT5SBQe_XImWSm5EfeJsufB0iEFSRGzg_5LyWg2mfDQm7AYGjrBq1dyHL0v-Uf4RrXu1p5r4m7F&_nc_zt=23&_nc_ht=scontent.fccu27-1.fna&_nc_gid=1P6v_T0_8eGc5rNkvfHvvw&oh=00_AfndShKYAkriTe2ak-lxyyAzncM2TMshqd-dXfYFpX240g&oe=693F4D35" 
+                     alt="Gallery Image 9" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 8 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-2.fna.fbcdn.net/v/t39.30808-6/581631085_122100337011117297_4344679543329557250_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=8rMjpr94-b0Q7kNvwF9vY0m&_nc_oc=Adnr28mSNCWYIAwNalMJUxwknBaujOdVA7iHsT2OLbPelLaWIvwYVQwIF2lLHUrNhW37fZvb1ZsEMY2HzJH8Epdg&_nc_zt=23&_nc_ht=scontent.fccu27-2.fna&_nc_gid=wHd67fT8SCvq3ZzONwk7hg&oh=00_Afkxl4hUezKMJvkVMtx_UmacJiWiT0iZ0EAtUVuSMOYjZQ&oe=693F6C07')">
+                <img src="https://scontent.fccu27-2.fna.fbcdn.net/v/t39.30808-6/581631085_122100337011117297_4344679543329557250_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=8rMjpr94-b0Q7kNvwF9vY0m&_nc_oc=Adnr28mSNCWYIAwNalMJUxwknBaujOdVA7iHsT2OLbPelLaWIvwYVQwIF2lLHUrNhW37fZvb1ZsEMY2HzJH8Epdg&_nc_zt=23&_nc_ht=scontent.fccu27-2.fna&_nc_gid=wHd67fT8SCvq3ZzONwk7hg&oh=00_Afkxl4hUezKMJvkVMtx_UmacJiWiT0iZ0EAtUVuSMOYjZQ&oe=693F6C07" 
+                     alt="Gallery Image 8" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 7 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-1.fna.fbcdn.net/v/t39.30808-6/581045392_122100336927117297_6833651287084812773_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Y42Yo1yOdeEQ7kNvwE9tyLk&_nc_oc=Adl51liZfSq_vYZee_wOo_jQFh9RnRSKp3Yp1s0zQGeR0ux049WXODQ4ph0i9lrFfMxSJxEOV4CrPeUzy7AAnKAY&_nc_zt=23&_nc_ht=scontent.fccu27-1.fna&_nc_gid=fqwDugj-jbIxpIfokHK06g&oh=00_AfnGGUTmUtyZAKabdHmZPrD7Hyi2iNaijITG4qOdXO4efA&oe=693F5962')">
+                <img src="https://scontent.fccu27-1.fna.fbcdn.net/v/t39.30808-6/581045392_122100336927117297_6833651287084812773_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Y42Yo1yOdeEQ7kNvwE9tyLk&_nc_oc=Adl51liZfSq_vYZee_wOo_jQFh9RnRSKp3Yp1s0zQGeR0ux049WXODQ4ph0i9lrFfMxSJxEOV4CrPeUzy7AAnKAY&_nc_zt=23&_nc_ht=scontent.fccu27-1.fna&_nc_gid=fqwDugj-jbIxpIfokHK06g&oh=00_AfnGGUTmUtyZAKabdHmZPrD7Hyi2iNaijITG4qOdXO4efA&oe=693F5962" 
+                     alt="Gallery Image 7" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 6 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/581002845_122099436693117297_7054725180730028523_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=ZpsxWKMVCY8Q7kNvwHWf55y&_nc_oc=AdkJs_1y_gEFMoooVlnuNYxkuk1NyHDz5gKFgZD-6LXVs3O837pwa5JG0lK3f2-jO8YAOINyCfeVqbQjmerHbp-9&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=NSXfbNEdig6M3nKXjKdLAQ&oh=00_Afm_KsxdZCCOzyGyBT6-OQmSBB9lUrdlR3pzKZTvY-rtQA&oe=693F69B4')">
+                <img src="https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/581002845_122099436693117297_7054725180730028523_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=ZpsxWKMVCY8Q7kNvwHWf55y&_nc_oc=AdkJs_1y_gEFMoooVlnuNYxkuk1NyHDz5gKFgZD-6LXVs3O837pwa5JG0lK3f2-jO8YAOINyCfeVqbQjmerHbp-9&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=NSXfbNEdig6M3nKXjKdLAQ&oh=00_Afm_KsxdZCCOzyGyBT6-OQmSBB9lUrdlR3pzKZTvY-rtQA&oe=693F69B4" 
+                     alt="Gallery Image 6" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 5 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu20-1.fna.fbcdn.net/v/t39.30808-6/580969221_122099436609117297_6012869531799475262_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Lxi0ZRlPpEIQ7kNvwGqQH2k&_nc_oc=AdkMuxeJMfUuvmvF8jbdo4I3BgddizdLZlhBZEIAXZFCrAO311vbqQv43It6OG89zFexjZSsUafOkptSKi1RK5tN&_nc_zt=23&_nc_ht=scontent.fccu20-1.fna&_nc_gid=ku_-3L0tQLKWA_AxammLiQ&oh=00_AfnaNJzqpxa8jsuetsihzKPrE6_YIY_fqNxBmBV04J0_xg&oe=693F6CB5')">
+                <img src="https://scontent.fccu20-1.fna.fbcdn.net/v/t39.30808-6/580969221_122099436609117297_6012869531799475262_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Lxi0ZRlPpEIQ7kNvwGqQH2k&_nc_oc=AdkMuxeJMfUuvmvF8jbdo4I3BgddizdLZlhBZEIAXZFCrAO311vbqQv43It6OG89zFexjZSsUafOkptSKi1RK5tN&_nc_zt=23&_nc_ht=scontent.fccu20-1.fna&_nc_gid=ku_-3L0tQLKWA_AxammLiQ&oh=00_AfnaNJzqpxa8jsuetsihzKPrE6_YIY_fqNxBmBV04J0_xg&oe=693F6CB5" 
+                     alt="Gallery Image 5" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 4 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/582268907_122099436381117297_5515027904801434397_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=KWs2yp1ht0wQ7kNvwEr2eWo&_nc_oc=Adlb5CyymbmEZjA7dFD8o5oYo26boqPlS5ZoQeIT05HiA-a0uc5tJCDeqCxsEe9vldp_a9zaqVkkM1UeLhCDTmi3&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=m-2KzFVy9wO56ypYVrpq8A&oh=00_Afn5g2PoOhSeidZsqjkIhLVv_f73x6YtRUvRRIQu_JZImg&oe=693F51FD')">
+                <img src="https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/582268907_122099436381117297_5515027904801434397_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=KWs2yp1ht0wQ7kNvwEr2eWo&_nc_oc=Adlb5CyymbmEZjA7dFD8o5oYo26boqPlS5ZoQeIT05HiA-a0uc5tJCDeqCxsEe9vldp_a9zaqVkkM1UeLhCDTmi3&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=m-2KzFVy9wO56ypYVrpq8A&oh=00_Afn5g2PoOhSeidZsqjkIhLVv_f73x6YtRUvRRIQu_JZImg&oe=693F51FD" 
+                     alt="Gallery Image 4" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 3 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-2.fna.fbcdn.net/v/t39.30808-6/582216011_122099436261117297_5651093964423295553_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=YPhJSA59KqoQ7kNvwFS4zy0&_nc_oc=AdnQ2pNoKQcV7mJuKIMPTgKnQ46fse7M63HnI3AUe5ggKRiI_stZSJ0PSfhV5yngxPfGmZfA-mjbIf6wF-QVSRbH&_nc_zt=23&_nc_ht=scontent.fccu27-2.fna&_nc_gid=TfYr6ZbsDeqpelmxJ6ktdQ&oh=00_AfnlBZjQ83FdnRoIgrMBSy3XAeQtckZ5SQifVr0OJBKgRg&oe=693F7907')">
+                <img src="https://scontent.fccu27-2.fna.fbcdn.net/v/t39.30808-6/582216011_122099436261117297_5651093964423295553_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=YPhJSA59KqoQ7kNvwFS4zy0&_nc_oc=AdnQ2pNoKQcV7mJuKIMPTgKnQ46fse7M63HnI3AUe5ggKRiI_stZSJ0PSfhV5yngxPfGmZfA-mjbIf6wF-QVSRbH&_nc_zt=23&_nc_ht=scontent.fccu27-2.fna&_nc_gid=TfYr6ZbsDeqpelmxJ6ktdQ&oh=00_AfnlBZjQ83FdnRoIgrMBSy3XAeQtckZ5SQifVr0OJBKgRg&oe=693F7907" 
+                     alt="Gallery Image 3" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-2.fna.fbcdn.net/v/t39.30808-6/582489366_122099436195117297_4241994008714241144_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=5kZZlitXJXwQ7kNvwF8k8S0&_nc_oc=AdkPnGkMferYt5UqNCSZrR1budTPgM_K1q-E9HhWE_ASscIT4m3zws8uj9a9Crvl87p9rt7d-urzbxEjKIeo19yC&_nc_zt=23&_nc_ht=scontent.fccu27-2.fna&_nc_gid=-h5K_sN90M-w_ncWA_GIrg&oh=00_Afm4CCU_tEQheahsdZ7uucqG4SpLcjk_fR2ZyR47OJ_ubA&oe=693F5426')">
+                <img src="https://scontent.fccu27-2.fna.fbcdn.net/v/t39.30808-6/582489366_122099436195117297_4241994008714241144_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=5kZZlitXJXwQ7kNvwF8k8S0&_nc_oc=AdkPnGkMferYt5UqNCSZrR1budTPgM_K1q-E9HhWE_ASscIT4m3zws8uj9a9Crvl87p9rt7d-urzbxEjKIeo19yC&_nc_zt=23&_nc_ht=scontent.fccu27-2.fna&_nc_gid=-h5K_sN90M-w_ncWA_GIrg&oh=00_Afm4CCU_tEQheahsdZ7uucqG4SpLcjk_fR2ZyR47OJ_ubA&oe=693F5426" 
+                     alt="Gallery Image 2" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- Image 1 (Formerly first) -->
+            <div class="group relative aspect-square overflow-hidden rounded-xl border-2 border-transparent hover:border-yellow-500 transition-all cursor-pointer shadow-xl bg-gray-800"
+                 onclick="openModal('https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/558470454_122097483729117297_8407974933122949203_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=hUuxmvsqH2AQ7kNvwHFZwYD&_nc_oc=Adm8XhnxJ6brPgGkipNbcFFlHZe-iiHLacJdcnUY0JnrUlaoum2CPdYm2o_2eTYFU1PyVD1jAxhzb8UDcPTpWlUi&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=qtUEgx2TH_vEjR9S7ropfg&oh=00_Afk6hV27lvccKgK-QwRba16o1Ga_W5iHk_G-LBxUN96_qQ&oe=693F82FF')">
+                <img src="https://scontent.fccu27-3.fna.fbcdn.net/v/t39.30808-6/558470454_122097483729117297_8407974933122949203_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=hUuxmvsqH2AQ7kNvwHFZwYD&_nc_oc=Adm8XhnxJ6brPgGkipNbcFFlHZe-iiHLacJdcnUY0JnrUlaoum2CPdYm2o_2eTYFU1PyVD1jAxhzb8UDcPTpWlUi&_nc_zt=23&_nc_ht=scontent.fccu27-3.fna&_nc_gid=qtUEgx2TH_vEjR9S7ropfg&oh=00_Afk6hV27lvccKgK-QwRba16o1Ga_W5iHk_G-LBxUN96_qQ&oe=693F82FF" 
+                     alt="Gallery Image 1" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                    <i class="ph ph-magnifying-glass-plus text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                </div>
+            </div>
+
+            <!-- REVERSED ORDER END -->
+
+        </div>
+    </main>
+
+    <!-- Modal (Popup) -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-95 backdrop-blur-sm flex items-center justify-center p-4">
+        
+        <!-- Close Button -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:text-red-500 transition-colors z-50 p-2 rounded-full bg-gray-800 hover:bg-gray-700 focus:outline-none">
+            <i class="ph ph-x text-3xl"></i>
+        </button>
+
+        <div class="relative w-full max-w-5xl h-full flex flex-col items-center justify-center">
+            
+            <!-- Full Image -->
+            <img id="modalImage" src="" alt="Full View" class="max-h-[85vh] max-w-full object-contain shadow-2xl rounded-lg border border-gray-700">
+            
+            <!-- Bottom Controls -->
+            <div class="w-full flex justify-end mt-4 px-2">
+                <a id="downloadBtn" href="#" target="_blank" download class="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full transition-all transform hover:scale-105 shadow-lg">
+                    <i class="ph ph-download-simple text-xl"></i>
+                    <span>Download</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // Function to open modal
+        function openModal(src) {
+            modalImg.src = src;
+            
+            // Set download link
+            downloadBtn.href = src;
+            
+            // Show modal with animation
+            modal.classList.remove('hidden');
+            
+            // Add animation classes
+            setTimeout(() => {
+                modalImg.classList.add('modal-enter-active');
+            }, 10);
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close modal
+        function closeModal() {
+            modal.classList.add('hidden');
+            modalImg.src = ''; // clear source
+            
+            // Re-enable body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal if clicking outside the image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.closest('.flex-col') === null && e.target !== modalImg) {
+                // Check if the click was not on the image or the download button container
+                // Actually easier: check if target is the modal background div
+                if(e.target === modal) {
+                    closeModal();
+                }
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
